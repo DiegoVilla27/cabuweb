@@ -5,6 +5,7 @@ import "./globals.css";
 import CookieBanner from "@/components/widgets/CookieBanner";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import RecaptchaProvider from "@/components/providers/RecaptchaProvider";
 
 export const viewport: Viewport = {
   themeColor: "#000000",
@@ -168,7 +169,9 @@ export default function RootLayout({
         </noscript>
       </head>
       <body className="min-h-full flex flex-col">
-        {children}
+        <RecaptchaProvider>
+          {children}
+        </RecaptchaProvider>
         <Toaster position="bottom-right" richColors />
         <CookieBanner />
         <script

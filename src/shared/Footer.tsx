@@ -9,7 +9,8 @@ import * as z from "zod";
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { submitContactForm } from "@/app/actions/contact";
 
 // EmailJS Keys
 const EMAILJS_CONFIG = {
@@ -45,6 +46,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 export default function Footer() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const {
     register,
@@ -63,30 +65,32 @@ export default function Footer() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
+    if (!executeRecaptcha) {
+      toast.error("Sistema de seguridad iniciando.", { description: "Por favor, espera un segundo e intenta de nuevo." });
+      return;
+    }
+
     setLoading(true);
     const toastId = toast.loading("Enviando mensaje...");
 
     try {
       const typeLabel = data.type === "web" ? "Página Web" : data.type === "app" ? "Aplicación Móvil" : "Software a la medida";
 
-      // 1. Guardar en Supabase
-      const { error: supabaseError } = await supabase
-        .from("contacts")
-        .insert([
-          {
-            name: data.name,
-            email: data.email,
-            type: typeLabel,
-            message: data.message,
-          },
-        ]);
+      // 1. Obtener Token de reCAPTCHA v3
+      const token = await executeRecaptcha("contact");
 
-      if (supabaseError) {
-        console.error("Supabase Error:", supabaseError);
-        throw new Error("Error al guardar en la base de datos.");
-      }
+      // 2. Validar Token y Guardar en Supabase a través del Servidor
+      await submitContactForm(
+        {
+          name: data.name,
+          email: data.email,
+          type: typeLabel,
+          message: data.message,
+        },
+        token
+      );
 
-      // 2. Enviar email vía EmailJS
+      // 3. Enviar email vía EmailJS (Solo si el servidor aprueba)
       const response = await emailjs.send(
         EMAILJS_CONFIG.serviceId,
         EMAILJS_CONFIG.templateId,
