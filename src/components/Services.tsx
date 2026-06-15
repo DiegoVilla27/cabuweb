@@ -12,36 +12,36 @@ export default function Services() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <TitleSection
-          titleOne="Nuestros"
-          titleTwo="Servicios"
-          text="Transformamos ideas innovadoras en plataformas digitales de élite. Creamos experiencias que redefinen tu marca y la posicionan en la cima."
+          titleOne="Soluciones"
+          titleTwo="Tecnológicas"
+          text="No hacemos simples páginas web. Diseñamos infraestructuras digitales de alto impacto preparadas para escalar, convertir y superar a tu competencia."
         />
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mt-20">
+        {/* Compact Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
           <ServiceItem
             icon="cw-web.svg"
             titleOne="Desarrollo"
             titleTwo="Web"
-            text="Ofrecemos sitios web de altísima calidad con una infraestructura de desempeño extremo. Desde Landing Pages inmersivas hasta E-commerce transaccionales, todo diseñado a la perfección."
+            text="Sitios web de altísima calidad con desempeño extremo. Desde Landing Pages hasta E-commerce."
             modalType="web"
-            className="md:col-span-12 lg:col-span-7 min-h-[420px]"
+            className="min-h-[300px]"
           />
           <ServiceItem
             icon="cw-app.svg"
-            titleOne="Desarrollo de"
-            titleTwo="aplicaciones"
-            text="Tu contenido al alcance de todos garantizando máxima funcionalidad y fiabilidad nativa. Ecosistemas móviles para iOS y Android."
+            titleOne="Aplicaciones"
+            titleTwo="Híbridas"
+            text="Aplicaciones móviles multiplataforma para iOS y Android con rendimiento excepcional."
             modalType="app"
-            className="md:col-span-12 lg:col-span-5 min-h-[420px]"
+            className="min-h-[300px]"
           />
           <ServiceItem
             icon="cw-software.svg"
-            titleOne="Desarrollo a"
-            titleTwo="la medida"
-            text="Sistemas complejos reducidos a interfaces minimalistas. Desarrollamos arquitecturas a la medida para optimizar tu flujo de trabajo y escalar tus operaciones."
+            titleOne="Software a"
+            titleTwo="la Medida"
+            text="Sistemas complejos reducidos a interfaces minimalistas para escalar tus operaciones."
             modalType="software"
-            className="md:col-span-12 min-h-[420px]"
+            className="min-h-[300px]"
           />
         </div>
       </div>

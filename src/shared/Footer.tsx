@@ -126,15 +126,15 @@ export default function Footer() {
               </h4>
               <hr className="mt-4 mb-8 w-1/5 border-zinc-800" />
               <div className="flex flex-col gap-5 text-zinc-400 font-helveticaRoman text-sm">
-                <a href="mailto:cabuweb.info@gmail.com" className="hover:text-white transition-colors flex items-center gap-3">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=cabuweb.info@gmail.com&su=Consulta%20sobre%20proyecto" target="_blank" rel="noreferrer" className="hover:text-white transition-colors flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center"><img className="w-4 h-4 filter brightness-200" src="/icons/cw-mail.svg" alt="Email" /></div>
                   cabuweb.info@gmail.com
                 </a>
-                <div className="flex items-center gap-3 hover:text-white transition-colors">
+                <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center"><img className="w-4 h-4 filter brightness-200" src="/icons/cw-phone.svg" alt="Phone" /></div>
                   <div className="flex flex-col">
-                    <a href="https://api.whatsapp.com/send?phone=+573023537918" target="_blank" rel="noreferrer">(+57) 302 353 7918</a>
-                    <a href="https://api.whatsapp.com/send?phone=+34658074821" target="_blank" rel="noreferrer">(+34) 658 074 821</a>
+                    <a href="https://api.whatsapp.com/send?phone=573114780189&text=%C2%A1Hola%20equipo%20de%20Cabuweb!%20%F0%9F%91%8B%20Estoy%20interesado%20en%20cotizar%20un%20proyecto%20tecnol%C3%B3gico%20con%20ustedes.%20%F0%9F%9A%80" target="_blank" rel="noreferrer" className="hover:text-white transition-colors block py-0.5">(+57) 311 478 0189</a>
+                    <a href="https://api.whatsapp.com/send?phone=34658074821&text=%C2%A1Hola%20equipo%20de%20Cabuweb!%20%F0%9F%91%8B%20Estoy%20interesado%20en%20cotizar%20un%20proyecto%20tecnol%C3%B3gico%20con%20ustedes.%20%F0%9F%9A%80" target="_blank" rel="noreferrer" className="hover:text-white transition-colors block py-0.5">(+34) 658 074 821</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 hover:text-white transition-colors">
@@ -157,10 +157,12 @@ export default function Footer() {
           {/* Contact Form */}
           <div className="col-span-12 lg:col-span-5 mt-12 lg:mt-0 z-20 relative">
             <div className="bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-4xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
-              <h3 className="font-lemonLight text-2xl text-zinc-100 tracking-wide">
-                Comencemos tu <br /><span className="font-lemonBold text-white">proyecto</span>
+              <h3 className="font-lemonLight text-2xl md:text-3xl text-zinc-100 tracking-wide">
+                Escalemos tu <br /><span className="font-lemonBold text-white">Empresa</span>
               </h3>
-              <hr className="border-t border-zinc-700 w-1/5 mt-4 mb-8" />
+              <p className="font-helveticaRoman text-sm md:text-base text-zinc-400 mt-4 leading-relaxed mb-8">
+                Estás a un mensaje de distancia de transformar tu negocio. Cuéntanos sobre tu visión y nuestro equipo de arquitectos digitales se pondrá en contacto hoy mismo.
+              </p>
 
               <form onSubmit={handleSubmit(onSubmit)} className="mt-8 flex flex-col gap-5">
                 {/* Name & Email Row */}

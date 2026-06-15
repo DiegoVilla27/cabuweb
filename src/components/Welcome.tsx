@@ -11,9 +11,11 @@ export default function Welcome() {
 
   return (
     <div className="w-full min-h-screen bg-zinc-950 flex flex-col justify-center items-center relative overflow-hidden">
-      {/* Background Glow */}
-      <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0">
-        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-screen h-[100vw] max-w-[1000px] max-h-[1000px] bg-cabuwebMedium/10 blur-[120px] rounded-full pointer-events-none animate-breathe" />
+      {/* Aurora Background */}
+      <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-[50vw] h-[50vw] max-w-[800px] max-h-[800px] bg-cabuwebMedium/20 blur-[150px] rounded-full pointer-events-none animate-aurora-1" />
+        <div className="absolute bottom-1/4 right-1/4 w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-blue-600/20 blur-[150px] rounded-full pointer-events-none animate-aurora-2" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[1000px] max-h-[1000px] bg-indigo-600/10 blur-[150px] rounded-full pointer-events-none animate-breathe" />
       </motion.div>
 
       {/* Grid Pattern */}
@@ -32,7 +34,9 @@ export default function Welcome() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cabuwebMedium opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-cabuwebLight"></span>
             </span>
-            <span className="text-zinc-300 font-helveticaRoman text-xs tracking-widest uppercase">Diseño & Desarrollo Premium</span>
+            <p className="font-helveticaRoman text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase text-cabuwebMedium drop-shadow-md -mb-1">
+              Software Premium
+            </p>
           </motion.div>
 
           <motion.h1
@@ -41,28 +45,24 @@ export default function Welcome() {
             transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
             className="font-lemonBold text-transparent bg-clip-text bg-linear-to-b from-white to-zinc-500 text-center text-5xl md:text-7xl lg:text-[7rem] leading-[1.1] tracking-tight max-w-5xl drop-shadow-lg"
           >
-            Construimos <br className="hidden md:block" />
-            <span className="text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.2)]">el futuro digital</span>
+            Aceleramos tu <br className="hidden md:block" />
+            <span className="text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.2)]">Crecimiento Digital</span>
           </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 1 }}
-            className="text-zinc-400 font-helveticaRoman text-center text-base md:text-lg lg:text-xl mt-8 max-w-2xl leading-relaxed"
-          >
-            Llevamos a tu empresa más allá de la competencia con páginas web, aplicaciones móviles y software a la medida diseñados para dominar.
-          </motion.p>
-
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1, duration: 0.5, ease: "backOut" }}
-            className="mt-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
+            className="mt-8 md:mt-12 w-full flex flex-col items-center"
           >
-            <Link href="#footer">
-              <button className="group relative flex items-center gap-4 bg-white text-zinc-950 px-8 py-4 rounded-full font-helveticaBold text-sm uppercase tracking-widest hover:scale-105 transition-all duration-300 overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] cursor-pointer">
-                <span className="relative z-10">Cotiza Ahora</span>
+            <p className="font-helveticaRoman text-base md:text-xl lg:text-2xl text-zinc-400 max-w-3xl text-center leading-relaxed drop-shadow">
+              Construimos ecosistemas tecnológicos de alto rendimiento. Desde plataformas web inmersivas hasta sistemas escalables, transformamos tu visión en software de vanguardia que domina el mercado.
+            </p>
+
+            <Link href="#footer" className="mt-12 md:mt-16 group relative inline-flex items-center justify-center">
+              <div className="absolute inset-0 bg-cabuwebMedium/20 rounded-full blur-xl group-hover:bg-cabuwebMedium/40 transition-colors duration-500" />
+              <button className="relative overflow-hidden font-lemonLight tracking-widest text-xs md:text-sm uppercase bg-zinc-900 border border-white/10 text-white px-10 py-5 rounded-full hover:border-cabuwebMedium transition-all duration-500 flex items-center gap-4 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                <span className="relative z-10 font-bold">Iniciar Proyecto</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform relative z-10" />
               </button>
             </Link>

@@ -12,11 +12,11 @@ export default function Team() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <TitleSection
-          titleOne="Mentes"
-          titleTwo="Maestras"
-          text="El talento humano detrás del código. Un equipo de ingenieros, diseñadores y estrategas obsesionados con la perfección técnica y el diseño de vanguardia."
+          titleOne="Talento"
+          titleTwo="de Élite"
+          text="No somos una agencia tradicional. Somos un escuadrón de ingenieros y diseñadores altamente especializados, construyendo el software del mañana."
         />
-        <div className="grid grid-cols-12 gap-8 lg:gap-12 mt-20">
+        <div className="flex flex-wrap justify-center gap-6 md:gap-10 lg:gap-16 mt-20 max-w-5xl mx-auto">
           {TEAM_MEMBERS.map((item) => (
             <TeamItem key={item.id} item={item} />
           ))}
