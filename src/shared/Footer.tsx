@@ -9,6 +9,7 @@ import * as z from "zod";
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 // EmailJS Keys
 const EMAILJS_CONFIG = {
@@ -66,13 +67,33 @@ export default function Footer() {
     const toastId = toast.loading("Enviando mensaje...");
 
     try {
+      const typeLabel = data.type === "web" ? "Página Web" : data.type === "app" ? "Aplicación Móvil" : "Software a la medida";
+
+      // 1. Guardar en Supabase
+      const { error: supabaseError } = await supabase
+        .from("contacts")
+        .insert([
+          {
+            name: data.name,
+            email: data.email,
+            type: typeLabel,
+            message: data.message,
+          },
+        ]);
+
+      if (supabaseError) {
+        console.error("Supabase Error:", supabaseError);
+        throw new Error("Error al guardar en la base de datos.");
+      }
+
+      // 2. Enviar email vía EmailJS
       const response = await emailjs.send(
         EMAILJS_CONFIG.serviceId,
         EMAILJS_CONFIG.templateId,
         {
           name: data.name,
           email: data.email,
-          type: data.type === "web" ? "Página Web" : data.type === "app" ? "Aplicación Móvil" : "Software a la medida",
+          type: typeLabel,
           message: data.message,
         },
         EMAILJS_CONFIG.publicKey
@@ -85,7 +106,7 @@ export default function Footer() {
         reset();
         router.push("/gracias");
       }
-    } catch {
+    } catch (error) {
       toast.error("No se pudo enviar el mensaje.", {
         id: toastId,
         description: "Inténtalo de nuevo más tarde.",
