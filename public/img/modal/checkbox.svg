@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23">
+  <g id="Grupo_830" data-name="Grupo 830" transform="translate(-657 -409)">
+    <g id="Rectángulo_445" data-name="Rectángulo 445" transform="translate(657 409)" fill="#fff" stroke="#6e6e6e" stroke-width="1">
+      <rect width="23" height="23" rx="5" stroke="none"/>
+      <rect x="0.5" y="0.5" width="22" height="22" rx="4.5" fill="none"/>
+    </g>
+    <path id="_85" data-name="85" d="M14.132,88.534,6.337,96.329,3.582,93.573a.334.334,0,0,0-.472,0l-.315.315a.334.334,0,0,0,0,.472L6.1,97.668a.334.334,0,0,0,.472,0l8.346-8.346a.334.334,0,0,0,0-.472l-.315-.315A.334.334,0,0,0,14.132,88.534Z" transform="translate(659.595 327.367)" fill="#0074ff"/>
+  </g>
+</svg>

@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "HelveticaBold";
+  src: url("/fonts/helvetica/HelveticaBoldCondensed.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HelveticaMedium";
+  src: url("/fonts/helvetica/HelveticaMediumCondensed.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HelveticaRoman";
+  src: url("/fonts/helvetica/HelveticaRoman.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LemonBold";
+  src: url("/fonts/lemon/LemonMilkBold.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LemonLight";
+  src: url("/fonts/lemon/LemonMilkLight.otf") format("opentype");
+  font-display: swap;
+}
+
+@theme {
+  --color-cabuwebDark: #2443df;
+  --color-cabuwebMedium: #0074ff;
+  --color-cabuwebMediumOpacitity10: #CEE5FF;
+  --color-cabuwebMediumOpacitity50: #E5F1FF;
+  --color-cabuwebLight: #2575fc;
+  --color-cabuwebFooter: #222428;
+  --color-cabuwebFacebook: #3b5998;
+  --color-cabuwebInstagram: #e1306c;
+
+  --font-helveticaBold: "HelveticaBold", sans-serif;
+  --font-helveticaMedium: "HelveticaMedium", sans-serif;
+  --font-helveticaRoman: "HelveticaRoman", sans-serif;
+  --font-lemonBold: "LemonBold", sans-serif;
+  --font-lemonLight: "LemonLight", sans-serif;
+
+  --breakpoint-3xs: 375px;
+  --breakpoint-2xs: 425px;
+  --breakpoint-xs: 576px;
+  --breakpoint-lg: 992px;
+  --breakpoint-3xl: 1440px;
+  --breakpoint-4xl: 1520px;
+
+  --width-modal: 600px;
+  --height-modal: 700px;
+
+  --animate-pulse-scale: pulse-scale 1.5s infinite;
+}
+
+@keyframes pulse-scale {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-helveticaRoman);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
+
+/* Scroll smooth for the entire page */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+

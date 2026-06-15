@@ -1,0 +1,9 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+User-agent: Googlebot
+Allow: /
+User-agent: Twitterbot
+Allow: /
+
+Sitemap: http://cabuweb.com/sitemap.xml
