@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useStore } from "@/store/useStore";
@@ -11,9 +10,10 @@ interface ServiceItemProps {
   titleTwo: string;
   text: string;
   modalType: "web" | "app" | "software";
+  className?: string;
 }
 
-export default function ServiceItem({ icon, titleOne, titleTwo, text, modalType }: ServiceItemProps) {
+export default function ServiceItem({ icon, titleOne, titleTwo, text, modalType, className }: ServiceItemProps) {
   const openModal = useStore((state) => state.openModal);
 
   return (
@@ -21,40 +21,40 @@ export default function ServiceItem({ icon, titleOne, titleTwo, text, modalType 
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5 }}
-      className="group col-span-12 lg:col-span-4 relative shadow-[0_8px_30px_rgba(0,0,0,0.04)] my-4 p-8 rounded-2xl border border-zinc-100 hover:border-cabuwebLight/50 hover:shadow-[0_20px_40px_rgba(0,116,255,0.12)] hover:bg-linear-to-br hover:from-white hover:to-blue-50/40 transition-all duration-500 bg-white"
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`group relative p-6 md:p-8 rounded-4xl border border-white/5 bg-zinc-900/40 backdrop-blur-md overflow-hidden hover:bg-zinc-900/60 transition-colors duration-500 flex flex-col justify-between shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.8)] hover:border-cabuwebMedium/30 ${className || ""}`}
     >
-      {/* Dynamic animated decorative triangles using hover states */}
+      {/* Spotlight glow effect on hover */}
+      <div className="absolute inset-0 bg-linear-to-br from-cabuwebMedium/0 via-cabuwebMedium/0 to-cabuwebMedium/0 group-hover:from-cabuwebMedium/10 group-hover:via-transparent group-hover:to-transparent transition-all duration-700 pointer-events-none" />
+
+      <div className="relative z-10 flex flex-col items-start h-full">
+        <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 shadow-[0_0_20px_rgba(255,255,255,0.05)]">
+          <img src={`/img/services/${icon}`} className="w-6 h-6 filter brightness-200" alt="Icon Service" />
+        </div>
+
+        <h3 className="font-helveticaBold uppercase text-2xl md:text-3xl text-zinc-100 tracking-wide leading-tight drop-shadow-md">
+          {titleOne} <br /> {titleTwo}
+        </h3>
+
+        <p className="text-sm md:text-base text-zinc-400 font-helveticaRoman pt-4 leading-relaxed grow">
+          {text}
+        </p>
+
+        <button
+          onClick={() => openModal(modalType)}
+          className="mt-8 font-helveticaBold text-xs md:text-sm uppercase tracking-widest flex items-center gap-3 text-zinc-300 hover:text-white transition-colors group/btn cursor-pointer"
+        >
+          <span>Saber más</span>
+          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-2 text-cabuwebMedium" />
+        </button>
+      </div>
+
+      {/* Decorative large icon faded in background */}
       <img
-        src="/img/services/triangle-back.svg"
-        className="absolute -top-5 right-0 mx-auto transition-all duration-300 left-6 transform scale-110 group-hover:rotate-[-35deg] group-hover:left-0 pointer-events-none"
-        alt="Triangle Back"
+        src={`/img/services/${icon}`}
+        className="absolute -bottom-6 -right-6 w-48 h-48 opacity-5 filter blur-sm group-hover:scale-110 group-hover:opacity-10 transition-all duration-700 pointer-events-none"
+        alt="Background Icon"
       />
-      <img
-        src="/img/services/triangle-top.svg"
-        className="absolute -top-5 right-0 mx-auto transition-all duration-300 -left-6 group-hover:rotate-35 group-hover:left-0 pointer-events-none"
-        alt="Triangle Top"
-      />
-
-      <img src={`/img/services/${icon}`} className="absolute top-16 left-0 right-0 mx-auto" alt="Icon Service" />
-
-      <h3 className="font-helveticaBold uppercase text-center text-xl md:text-2xl lg:text-3xl mt-32 text-gray-800">
-        {titleOne} <br /> {titleTwo}
-      </h3>
-
-      <hr className="border-t border-gray-400 w-1/5 my-3 mx-auto transition-all duration-300 group-hover:w-2/5 group-hover:border-cabuwebLight" />
-
-      <p className="text-sm md:text-base text-gray-500 font-helveticaRoman text-left pt-5 leading-relaxed">
-        {text}
-      </p>
-
-      <button
-        onClick={() => openModal(modalType)}
-        className="w-full text-center mt-6 font-helveticaBold text-base flex items-center justify-center gap-2 text-zinc-800 hover:text-cabuwebMedium transition-colors group/btn cursor-pointer"
-      >
-        <span>Saber más</span>
-        <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-1.5 text-cabuwebMedium" />
-      </button>
     </motion.div>
   );
 }

@@ -1,9 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useStore } from "@/store/useStore";
-import { X } from "lucide-react";
+import { X, CheckCircle2, ArrowRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 
 export default function ServiceModal() {
   const { activeModal, closeModal } = useStore();
@@ -14,24 +14,66 @@ export default function ServiceModal() {
     switch (activeModal) {
       case "web":
         return {
-          titleOne: "Desarrollo de",
-          titleTwo: "páginas web",
+          titleOne: "Desarrollo",
+          titleTwo: "Web Élite",
           description:
-            "Ofrece a tus clientes un ambiente digital único, donde disfruten pasar el tiempo descubriendo tus productos y servicios.",
+            "Diseñamos infraestructuras web inmersivas de altísimo rendimiento. No construimos simples páginas, creamos experiencias interactivas que cautivan a tu audiencia y convierten visitantes en clientes leales.",
+          features: [
+            "Arquitectura escalable de alto rendimiento",
+            "Diseño UI/UX de vanguardia (Dark Luxury)",
+            "Optimización SEO avanzada y Core Web Vitals",
+            "E-commerce transaccional de alta conversión",
+            "Integración de CMS Headless y APIs personalizadas",
+          ],
+          tech: [
+            { name: "React", icon: "https://cdn.simpleicons.org/react/61DAFB" },
+            { name: "Next.js", icon: "https://cdn.simpleicons.org/nextdotjs/white" },
+            { name: "Angular", icon: "https://cdn.simpleicons.org/angular/DD0031" }
+          ],
         };
       case "app":
         return {
-          titleOne: "Desarrollo de",
-          titleTwo: "aplicaciones",
+          titleOne: "Aplicaciones",
+          titleTwo: "Híbridas",
           description:
-            "Ofrece a tus clientes un ambiente digital único, donde disfruten pasar el tiempo descubriendo tus productos y servicios.",
+            "Lleva el poder de tu empresa a los bolsillos de tus clientes. Desarrollamos aplicaciones móviles multiplataforma optimizando tiempos y costos sin sacrificar una experiencia de usuario adictiva.",
+          features: [
+            "Desarrollo ágil multiplataforma (iOS y Android)",
+            "Arquitecturas Offline-first y sincronización en tiempo real",
+            "Sistemas de notificaciones push inteligentes",
+            "Integración de pasarelas de pago y hardware del dispositivo",
+            "Publicación y optimización en App Store y Google Play",
+          ],
+          tech: [
+            { name: "React Native", icon: "https://cdn.simpleicons.org/react/61DAFB" },
+            { name: "Ionic", icon: "https://cdn.simpleicons.org/ionic/3880FF" },
+            { name: "Flutter", icon: "https://cdn.simpleicons.org/flutter/02569B" }
+          ],
         };
       case "software":
         return {
-          titleOne: "Desarrollo",
-          titleTwo: "a la medida",
+          titleOne: "Software",
+          titleTwo: "a la Medida",
           description:
-            "Ofrece a tus clientes un ambiente digital único, donde disfruten pasar el tiempo descubriendo tus productos y servicios.",
+            "Digitalizamos y automatizamos las operaciones más complejas de tu negocio. Construimos sistemas a medida, seguros y escalables que reducen costos operativos y preparan a tu empresa para el futuro.",
+          features: [
+            "Sistemas ERP y CRM personalizados",
+            "Automatización de flujos de trabajo (Workflows)",
+            "Arquitecturas Serverless y Cloud Computing",
+            "Paneles de administración y visualización de datos en tiempo real",
+            "Máxima seguridad y encriptación de extremo a extremo",
+          ],
+          tech: [
+            { name: "React", icon: "https://cdn.simpleicons.org/react/61DAFB" },
+            { name: "Next.js", icon: "https://cdn.simpleicons.org/nextdotjs/white" },
+            { name: "Angular", icon: "https://cdn.simpleicons.org/angular/DD0031" },
+            { name: "React Native", icon: "https://cdn.simpleicons.org/react/61DAFB" },
+            { name: "Ionic", icon: "https://cdn.simpleicons.org/ionic/3880FF" },
+            { name: "Flutter", icon: "https://cdn.simpleicons.org/flutter/02569B" },
+            { name: "Python", icon: "https://cdn.simpleicons.org/python/3776AB" },
+            { name: "Node.js", icon: "https://cdn.simpleicons.org/nodedotjs/339933" },
+            { name: "Laravel", icon: "https://cdn.simpleicons.org/laravel/FF2D20" }
+          ],
         };
     }
   };
@@ -42,82 +84,76 @@ export default function ServiceModal() {
     <AnimatePresence>
       <div
         onClick={closeModal}
-        className="fixed inset-0 flex bg-black/60 w-screen h-screen z-2000 flex-col justify-center items-center overflow-x-hidden p-4 cursor-pointer"
+        className="fixed inset-0 flex bg-black/80 backdrop-blur-sm w-screen h-screen z-9999 flex-col justify-center items-center overflow-x-hidden p-4 md:p-8 cursor-pointer"
       >
         <motion.div
           onClick={(e) => e.stopPropagation()}
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          transition={{ duration: 0.3 }}
-          className="relative bg-white px-8 py-12 flex flex-col justify-center items-center w-full max-w-[600px] rounded-3xl shadow-2xl overflow-hidden cursor-auto"
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="relative bg-zinc-950 border border-white/10 flex flex-col md:flex-row w-full max-w-[900px] rounded-4xl shadow-[0_30px_100px_rgba(0,0,0,0.8)] overflow-hidden cursor-auto"
         >
-          {/* Background shapes */}
-          <img
-            src="/img/proyects/bg-proyects-top-small.png"
-            className="opacity-60 absolute top-0 -left-6 pointer-events-none"
-            alt="Decoration Top"
-          />
-          <img
-            src="/img/proyects/bg-proyects-bottom-small.png"
-            className="opacity-60 absolute bottom-0 -right-6 pointer-events-none"
-            alt="Decoration Bottom"
-          />
+          {/* Subtle background glow */}
+          <div className="absolute top-0 left-0 w-full h-[500px] bg-cabuwebMedium/10 blur-[120px] rounded-full pointer-events-none -translate-y-1/2" />
 
           {/* Close button */}
           <button
             onClick={closeModal}
-            className="absolute top-6 right-6 cursor-pointer text-gray-400 hover:text-gray-700 transition-colors z-10"
+            className="absolute top-6 right-6 p-2 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full cursor-pointer text-zinc-400 hover:text-white transition-colors z-20"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
 
-          {/* Header */}
-          <h2 className="font-lemonLight text-center text-2xl md:text-3xl relative z-10 text-gray-800">
-            {content.titleOne} <span className="font-lemonBold">{content.titleTwo}</span>
-          </h2>
-          <hr className="border-t border-gray-400 w-1/5 mt-2 mx-auto relative z-10" />
+          {/* Left Column (Content) */}
+          <div className="flex-1 p-8 md:p-12 relative z-10 flex flex-col justify-center">
+            <h2 className="font-lemonLight text-3xl md:text-4xl text-zinc-100 uppercase tracking-wide leading-tight">
+              {content?.titleOne} <br />
+              <span className="font-lemonBold text-transparent bg-clip-text bg-linear-to-r from-cabuwebMedium to-blue-400 drop-shadow-md">
+                {content?.titleTwo}
+              </span>
+            </h2>
+            <p className="font-helveticaRoman mt-6 text-sm md:text-base text-zinc-400 leading-relaxed">
+              {content?.description}
+            </p>
 
-          {/* Description */}
-          <p className="font-helveticaRoman text-center my-10 text-sm md:text-base text-gray-600 relative z-10 leading-relaxed">
-            {content.description}
-          </p>
+            <div className="mt-8">
+              <p className="font-lemonBold text-xs text-zinc-300 uppercase tracking-widest mb-4">¿Qué incluimos?</p>
+              <ul className="flex flex-col gap-3">
+                {content?.features.map((feature, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-cabuwebMedium shrink-0 mt-0.5" />
+                    <span className="font-helveticaRoman text-sm text-zinc-300">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
-          {/* Sectores / Features */}
-          <ul className="list-inside list-disc mb-10 w-full px-4 relative z-10">
-            <li className="font-helveticaRoman font-bold my-2 text-sm sm:text-base text-gray-800 list-none">
-              <span className="block mb-2">Sectores:</span>
-              <div className="grid grid-cols-2 gap-2 mt-1 pl-2">
-                {[
-                  "Páginas estáticas",
-                  "Blogs",
-                  "Landing page",
-                  "E-commerce",
-                  "Web personal",
-                  "Web corporativa",
-                ].map((item) => (
-                  <div key={item} className="col-span-1 text-gray-600 font-light text-sm flex items-center gap-2">
-                    <img className="w-4 h-4" src="/img/modal/checkbox.svg" alt="Checkbox" />
-                    <span>{item}</span>
-                  </div>
+          {/* Right Column (Sidebar/CTA) */}
+          <div className="w-full md:w-[320px] bg-zinc-900/50 border-t md:border-t-0 md:border-l border-white/5 p-8 md:p-12 relative z-10 flex flex-col justify-between">
+            <div>
+              <p className="font-lemonBold text-xs text-zinc-300 uppercase tracking-widest mb-4">Tecnologías Base</p>
+              <div className="flex flex-wrap gap-2">
+                {content?.tech.map((techItem, index) => (
+                  <span key={index} className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/5 border border-white/10 text-xs font-helveticaRoman text-zinc-400 hover:bg-white/10 transition-colors">
+                    <img src={techItem.icon} alt={techItem.name} className="w-4 h-4 object-contain" />
+                    {techItem.name}
+                  </span>
                 ))}
               </div>
-            </li>
-            <li className="font-helveticaRoman font-bold mt-6 mb-2 text-sm sm:text-base text-gray-800 list-none flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-cabuwebMedium inline-block"></span>
-              <span>Infraestructura sólida</span>
-            </li>
-            <li className="font-helveticaRoman font-bold my-2 text-sm sm:text-base text-gray-800 list-none flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-cabuwebMedium inline-block"></span>
-              <span>Analíticas de Google</span>
-            </li>
-            <li className="font-helveticaRoman font-bold my-2 text-sm sm:text-base text-gray-800 list-none flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-cabuwebMedium inline-block"></span>
-              <span>Implementación de la plataforma</span>
-            </li>
-          </ul>
+            </div>
 
-          <img className="w-full mt-2 relative z-10" src="/img/modal/proccess.svg" alt="Proceso de desarrollo | Cabuweb" />
+            <div className="mt-12 md:mt-0">
+              <Link href="#footer" onClick={closeModal} className="group relative w-full flex items-center justify-center">
+                <div className="absolute inset-0 bg-cabuwebMedium/20 rounded-xl blur-md group-hover:bg-cabuwebMedium/40 transition-colors duration-500" />
+                <button className="relative w-full font-helveticaBold text-sm uppercase tracking-widest bg-zinc-800 border border-white/10 text-white px-6 py-4 rounded-xl hover:border-cabuwebMedium transition-all duration-500 flex items-center justify-center gap-3 shadow-lg">
+                  <span className="relative z-10">Cotizar Ahora</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform relative z-10" />
+                </button>
+              </Link>
+            </div>
+          </div>
         </motion.div>
       </div>
     </AnimatePresence>

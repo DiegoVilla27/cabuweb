@@ -18,68 +18,64 @@ export default function Projects() {
   };
 
   return (
-    <section id="proyects" className="px-6 py-24 relative bg-zinc-50/50 w-full overflow-hidden">
-      {/* Background patterns */}
-      <picture className="absolute top-0 -left-6 pointer-events-none select-none">
-        <source media="(min-width:1280px)" srcSet="/img/proyects/bg-proyects-top-big.png" />
-        <img src="/img/proyects/bg-proyects-top-small.png" className="opacity-40" alt="Background Proyects Top" />
-      </picture>
-      <picture className="absolute bottom-0 -right-6 pointer-events-none select-none">
-        <source media="(min-width:1280px)" srcSet="/img/proyects/bg-proyects-bottom-big.png" />
-        <img src="/img/proyects/bg-proyects-bottom-small.png" className="opacity-40" alt="Background Proyects Bottom" />
-      </picture>
+    <section id="proyects" className="px-6 py-32 relative w-full overflow-hidden bg-zinc-900/30 border-y border-white/5">
+      {/* Subtle Dotted Pattern for differentiation */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[24px_24px] pointer-events-none" />
+
+      {/* Background Ambience */}
+      <div className="absolute top-1/2 left-0 w-[800px] h-[800px] bg-cabuwebLight/5 blur-[150px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 animate-breathe" style={{ animationDelay: "4s" }} />
+      <div className="absolute bottom-0 right-0 w-modal h-[600px] bg-cabuwebDark/5 blur-[150px] rounded-full pointer-events-none translate-x-1/2 translate-y-1/2 animate-breathe" style={{ animationDelay: "1s" }} />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <TitleSection
-          titleOne="Nuestros"
-          titleTwo="Proyectos"
-          text="En nuestro portafolio, puedes navegar por los últimos proyectos desarrollados para nuestros clientes de diferentes empresas cumpliendo siempre con un propósito objetivo. Nuestro equipo calificado de diseñadores de interfaces y desarrolladores de software, siempre están listos para crear algo único para ti."
+          titleOne="Casos de"
+          titleTwo="Éxito"
+          text="Nuestro trabajo habla por sí solo. Explora el portafolio de empresas y startups que han revolucionado su industria con nuestra ingeniería."
         />
 
-      {/* Navigation Tabs */}
-      <div className="flex justify-center my-12 relative z-10">
-        <div className="flex justify-evenly items-center w-full max-w-2xl bg-white shadow-[0_2px_10px_rgba(0,0,0,0.04)] border border-zinc-100 p-1.5 rounded-full">
-          {[
-            { id: "web", label: "Páginas web" },
-            { id: "apps", label: "Aplicaciones móviles" },
-            { id: "foryou", label: "Para ti" },
-          ].map((tab) => {
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => handleTabChange(tab.id as "web" | "apps" | "foryou")}
-                className={`flex-1 text-center py-2.5 px-2 text-2xs xs:text-xs md:text-sm uppercase font-helveticaMedium cursor-pointer rounded-full transition-all duration-300 ${
-                  isActive
-                    ? "bg-cabuwebMediumOpacitity10 text-cabuwebMedium font-bold shadow-sm"
-                    : "text-zinc-500 hover:text-zinc-800"
-                }`}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
+        {/* Navigation Tabs */}
+        <div className="flex justify-center my-16 relative z-10">
+          <div className="flex justify-evenly items-center w-full max-w-2xl bg-zinc-900/50 backdrop-blur-md shadow-lg border border-white/10 p-1.5 rounded-full">
+            {[
+              { id: "web", label: "Páginas web" },
+              { id: "apps", label: <>Aplicaciones <span className="hidden md:inline">móviles</span></> },
+              { id: "foryou", label: "Para ti" },
+            ].map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => handleTabChange(tab.id as "web" | "apps" | "foryou")}
+                  className={`flex-1 text-center py-3 px-2 text-xs md:text-sm uppercase font-helveticaBold cursor-pointer rounded-full transition-all duration-300 ${isActive
+                    ? "bg-cabuwebMedium text-white shadow-[0_0_20px_rgba(0,116,255,0.4)] scale-[1.02]"
+                    : "text-zinc-500 hover:text-zinc-300"
+                    }`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
 
-      {/* Grid container with animation */}
-      <div className="grid grid-cols-12 gap-6 relative z-10">
-        <AnimatePresence mode="popLayout">
-          {list.map((item) => (
-            <motion.div
-              layout
-              key={item.id + "-" + activeTab}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3 }}
-              className="col-span-12 md:col-span-6 xl:col-span-4"
-            >
-              <ProjectItem item={item} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+        {/* Grid container with animation */}
+        <div className="grid grid-cols-12 gap-8 lg:gap-12 relative z-10 mt-8">
+          <AnimatePresence mode="popLayout">
+            {list.map((item, i) => (
+              <motion.div
+                layout
+                key={item.id + "-" + activeTab}
+                initial={{ opacity: 0, scale: 0.9, y: 50 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 50 }}
+                transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
+                className="col-span-12 md:col-span-6 xl:col-span-4 flex justify-center"
+              >
+                <ProjectItem item={item} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );
