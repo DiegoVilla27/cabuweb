@@ -51,14 +51,12 @@ export const metadata: Metadata = {
     siteName: "Cabuweb",
   },
   twitter: {
-    card: "summary",
-    site: "@cabuweb",
-    creator: "@cabuweb",
+    card: "summary_large_image",
     title:
       "Empresa de software. Realizamos páginas web, aplicaciones móviles y software a la medida para tu negocio.",
     description:
       "Diseñamos, desarrollamos e implementamos Páginas Web, Aplicaciones Móviles y Software a la medida. Llevando a tu negocio mas allá de la competencia. COTIZA AHORA!",
-    images: ["/img/seo/cabuweb_op_twitter.jpg"],
+    images: ["/img/seo/cabuweb_op.jpg"],
   },
   icons: {
     icon: [
