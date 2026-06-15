@@ -18,17 +18,17 @@ export default function TitleSection({ titleOne, titleTwo, text }: TitleSectionP
       transition={{ duration: 0.6 }}
       className="flex flex-col items-center text-center my-10"
     >
-      <h2 className="text-3xl md:text-4xl lg:text-5xl text-center text-zinc-800">
-        <span className="font-lemonLight">{titleOne}</span>&nbsp;
+      <h2 className="text-4xl md:text-5xl lg:text-6xl text-center text-zinc-100 tracking-tight leading-tight drop-shadow-lg">
+        <span className="font-lemonLight text-zinc-400">{titleOne}</span><br className="md:hidden" />&nbsp;
         <Typewriter
           strings={[titleTwo]}
           typeSpeed={80}
           backSpeed={80}
-          className="font-lemonBold text-cabuwebMedium"
+          className="font-lemonBold text-transparent bg-clip-text bg-linear-to-r from-cabuwebMedium to-blue-400 drop-shadow-[0_0_20px_rgba(0,116,255,0.3)]"
         />
       </h2>
-      <hr className="border-t border-gray-400 w-1/5 xl:w-1/12 my-5 mx-auto" />
-      <p className="font-helveticaRoman text-center mt-6 mb-5 text-sm md:text-base lg:text-lg xl:px-60 4xl:px-80 text-gray-500">
+      <hr className="border-t border-zinc-800 w-1/5 xl:w-1/12 my-8 mx-auto" />
+      <p className="font-helveticaRoman text-center mt-6 mb-5 text-base md:text-lg lg:text-xl xl:px-40 4xl:px-80 text-zinc-400 leading-relaxed">
         {text}
       </p>
     </motion.div>

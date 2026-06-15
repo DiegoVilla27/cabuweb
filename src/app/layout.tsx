@@ -137,6 +137,7 @@ export default function RootLayout({
   return (
     <html lang="es" className="h-full antialiased scroll-smooth">
       <body className="min-h-full flex flex-col">
+        <div className="film-grain pointer-events-none fixed inset-0 z-[9998] opacity-[0.03]"></div>
         {children}
         <Toaster position="bottom-right" richColors />
         <script
