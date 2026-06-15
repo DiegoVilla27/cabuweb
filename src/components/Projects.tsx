@@ -18,7 +18,7 @@ export default function Projects() {
   };
 
   return (
-    <section id="proyects" className="px-6 py-24 xl:px-40 3xl:px-48 4xl:px-80 relative bg-zinc-50/50">
+    <section id="proyects" className="px-6 py-24 relative bg-zinc-50/50 w-full overflow-hidden">
       {/* Background patterns */}
       <picture className="absolute top-0 -left-6 pointer-events-none select-none">
         <source media="(min-width:1280px)" srcSet="/img/proyects/bg-proyects-top-big.png" />
@@ -29,11 +29,12 @@ export default function Projects() {
         <img src="/img/proyects/bg-proyects-bottom-small.png" className="opacity-40" alt="Background Proyects Bottom" />
       </picture>
 
-      <TitleSection
-        titleOne="Nuestros"
-        titleTwo="Proyectos"
-        text="En nuestro portafolio, puedes navegar por los últimos proyectos desarrollados para nuestros clientes de diferentes empresas cumpliendo siempre con un propósito objetivo. Nuestro equipo calificado de diseñadores de interfaces y desarrolladores de software, siempre están listos para crear algo único para ti."
-      />
+      <div className="max-w-7xl mx-auto relative z-10">
+        <TitleSection
+          titleOne="Nuestros"
+          titleTwo="Proyectos"
+          text="En nuestro portafolio, puedes navegar por los últimos proyectos desarrollados para nuestros clientes de diferentes empresas cumpliendo siempre con un propósito objetivo. Nuestro equipo calificado de diseñadores de interfaces y desarrolladores de software, siempre están listos para crear algo único para ti."
+        />
 
       {/* Navigation Tabs */}
       <div className="flex justify-center my-12 relative z-10">
@@ -78,6 +79,7 @@ export default function Projects() {
             </motion.div>
           ))}
         </AnimatePresence>
+      </div>
       </div>
     </section>
   );

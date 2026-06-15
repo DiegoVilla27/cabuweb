@@ -19,14 +19,14 @@ export default function Welcome() {
 
   return (
     <div
-      className="bg-cover bg-center bg-no-repeat w-full"
+      className="bg-cover bg-center bg-no-repeat w-full bg-fixed"
       style={{ backgroundImage: `url("${backgrounds.back}")` }}
     >
       <div
         className="bg-contain bg-bottom bg-no-repeat w-[101%] h-[101vh] min-h-[600px] flex flex-col justify-between"
         style={{ backgroundImage: `url("${backgrounds.waves}")` }}
       >
-        <section id="home" className="h-full flex flex-col justify-center items-center px-6 xl:px-40 3xl:px-48">
+        <section id="home" className="h-full flex flex-col justify-center items-center px-6 max-w-7xl mx-auto">
           <div className="flex-1 flex flex-col justify-center items-center">
             <motion.h1
               initial={{ opacity: 0, scale: 0.9 }}

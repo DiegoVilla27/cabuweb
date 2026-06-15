@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import emailjs from "@emailjs/browser";
-import Swal from "sweetalert2";
+import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
 // EmailJS Keys
@@ -63,14 +63,7 @@ export default function Footer() {
 
   const onSubmit = async (data: ContactFormData) => {
     setLoading(true);
-    Swal.fire({
-      title: "Enviando...",
-      text: "Espera, por favor...",
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+    const toastId = toast.loading("Enviando formulario...");
 
     try {
       const response = await emailjs.send(
@@ -86,22 +79,16 @@ export default function Footer() {
       );
 
       if (response.status === 200) {
-        Swal.fire({
-          title: "Formulario enviado",
-          text: "Se ha enviado tu formulario satisfactoriamente. ¡En breve te responderemos!",
-          icon: "success",
-          confirmButtonColor: "#0074ff",
-          confirmButtonText: "Aceptar",
+        toast.success("¡Formulario enviado satisfactoriamente!", {
+          id: toastId,
+          description: "En breve nos pondremos en contacto contigo.",
         });
         reset();
       }
     } catch {
-      Swal.fire({
-        title: "Error",
-        text: "No se ha podido enviar tu formulario, inténtalo de nuevo.",
-        icon: "error",
-        confirmButtonColor: "#0074ff",
-        confirmButtonText: "Aceptar",
+      toast.error("No se pudo enviar el formulario.", {
+        id: toastId,
+        description: "Inténtalo de nuevo más tarde.",
       });
     } finally {
       setLoading(false);
@@ -115,8 +102,8 @@ export default function Footer() {
         <img src="/img/welcome/white-top-big.png" className="w-[101%] max-w-[inherit]" alt="Footer Waves" />
       </picture>
 
-      <div className="bg-cabuwebLight px-6 xl:px-40 3xl:px-48 4xl:px-80">
-        <div className="grid grid-cols-12 gap-8 lg:gap-12">
+      <div className="bg-cabuwebLight px-6 w-full">
+        <div className="max-w-7xl mx-auto grid grid-cols-12 gap-8 lg:gap-12 pb-12">
           {/* Logo and About */}
           <div className="col-span-12 lg:col-span-4 lg:mt-8">
             <div className="px-4">
@@ -214,12 +201,12 @@ export default function Footer() {
                 <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
                   <div className="grid grid-cols-12 gap-x-6 gap-y-4">
                     {/* Name */}
-                    <div className="col-span-12 xl:col-span-6 flex flex-col">
-                      <label htmlFor="inputName" className="mb-2 font-helveticaMedium text-sm text-zinc-700">Nombre completo</label>
+                    <div className="col-span-12 xl:col-span-6 flex flex-col relative group">
+                      <label htmlFor="inputName" className="mb-2 font-helveticaMedium text-sm text-zinc-600 transition-colors group-focus-within:text-cabuwebMedium">Nombre completo</label>
                       <input
                         type="text"
                         id="inputName"
-                        className={`px-3 py-2.5 font-helveticaRoman bg-zinc-100 rounded-lg w-full text-sm text-zinc-800 focus:outline-none focus:ring-2 focus:ring-cabuwebMedium/40 transition-shadow ${errors.name ? "ring-2 ring-red-500" : ""
+                        className={`px-4 py-3 bg-white border border-zinc-200 rounded-xl w-full text-sm text-zinc-800 focus:outline-none focus:border-cabuwebMedium focus:ring-4 focus:ring-cabuwebMedium/10 transition-all ${errors.name ? "border-red-500 focus:border-red-500 focus:ring-red-500/10" : ""
                           }`}
                         placeholder="Ej. Juan Pérez"
                         {...register("name")}
@@ -232,12 +219,12 @@ export default function Footer() {
                     </div>
 
                     {/* Email */}
-                    <div className="col-span-12 xl:col-span-6 flex flex-col">
-                      <label htmlFor="inputEmail" className="mb-2 font-helveticaMedium text-sm text-zinc-700">Correo electrónico</label>
+                    <div className="col-span-12 xl:col-span-6 flex flex-col relative group">
+                      <label htmlFor="inputEmail" className="mb-2 font-helveticaMedium text-sm text-zinc-600 transition-colors group-focus-within:text-cabuwebMedium">Correo electrónico</label>
                       <input
                         type="email"
                         id="inputEmail"
-                        className={`px-3 py-2.5 font-helveticaRoman bg-zinc-100 rounded-lg w-full text-sm text-zinc-800 focus:outline-none focus:ring-2 focus:ring-cabuwebMedium/40 transition-shadow ${errors.email ? "ring-2 ring-red-500" : ""
+                        className={`px-4 py-3 bg-white border border-zinc-200 rounded-xl w-full text-sm text-zinc-800 focus:outline-none focus:border-cabuwebMedium focus:ring-4 focus:ring-cabuwebMedium/10 transition-all ${errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500/10" : ""
                           }`}
                         placeholder="ejemplo@correo.com"
                         {...register("email")}
@@ -250,11 +237,11 @@ export default function Footer() {
                     </div>
 
                     {/* Service Type */}
-                    <div className="col-span-12 flex flex-col">
-                      <label htmlFor="selectService" className="mb-2 font-helveticaMedium text-sm text-zinc-700">Tipo de servicio</label>
+                    <div className="col-span-12 flex flex-col relative group">
+                      <label htmlFor="selectService" className="mb-2 font-helveticaMedium text-sm text-zinc-600 transition-colors group-focus-within:text-cabuwebMedium">Tipo de servicio</label>
                       <select
                         id="selectService"
-                        className="bg-zinc-100 rounded-lg w-full py-2.5 px-3 text-sm font-helveticaRoman text-zinc-800 focus:outline-none focus:ring-2 focus:ring-cabuwebMedium/40 transition-shadow cursor-pointer"
+                        className="px-4 py-3 bg-white border border-zinc-200 rounded-xl w-full text-sm text-zinc-800 focus:outline-none focus:border-cabuwebMedium focus:ring-4 focus:ring-cabuwebMedium/10 transition-all cursor-pointer"
                         {...register("type")}
                       >
                         <option value="web" className="font-helveticaRoman text-sm">Página Web</option>
@@ -264,12 +251,12 @@ export default function Footer() {
                     </div>
 
                     {/* Message */}
-                    <div className="col-span-12 flex flex-col">
-                      <label htmlFor="inputMessage" className="mb-2 font-helveticaMedium text-sm text-zinc-700">Dudas / Inquietudes / Mensaje</label>
+                    <div className="col-span-12 flex flex-col relative group">
+                      <label htmlFor="inputMessage" className="mb-2 font-helveticaMedium text-sm text-zinc-600 transition-colors group-focus-within:text-cabuwebMedium">Dudas / Inquietudes / Mensaje</label>
                       <textarea
                         id="inputMessage"
                         rows={4}
-                        className={`px-3 py-2.5 font-helveticaRoman bg-zinc-100 rounded-lg w-full text-sm text-zinc-800 focus:outline-none focus:ring-2 focus:ring-cabuwebMedium/40 transition-shadow resize-none ${errors.message ? "ring-2 ring-red-500" : ""
+                        className={`px-4 py-3 bg-white border border-zinc-200 rounded-xl w-full text-sm text-zinc-800 focus:outline-none focus:border-cabuwebMedium focus:ring-4 focus:ring-cabuwebMedium/10 transition-all resize-none ${errors.message ? "border-red-500 focus:border-red-500 focus:ring-red-500/10" : ""
                           }`}
                         placeholder="Escribe tu mensaje detallando lo que necesitas..."
                         {...register("message")}
@@ -309,7 +296,7 @@ export default function Footer() {
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-zinc-800 hover:bg-zinc-900 focus:bg-zinc-950 text-white rounded-lg py-3 font-lemonLight text-sm tracking-wider uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:bg-zinc-400 disabled:cursor-not-allowed"
+                        className="w-full bg-linear-to-r from-cabuwebMedium to-blue-600 hover:shadow-lg hover:shadow-cabuwebMedium/30 hover:scale-[1.02] focus:ring-4 focus:ring-cabuwebMedium/20 text-white rounded-xl py-3.5 font-helveticaBold text-sm tracking-widest uppercase transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {loading ? (
                           <>

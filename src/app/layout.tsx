@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -137,6 +138,7 @@ export default function RootLayout({
     <html lang="es" className="h-full antialiased scroll-smooth">
       <body className="min-h-full flex flex-col">
         {children}
+        <Toaster position="bottom-right" richColors />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

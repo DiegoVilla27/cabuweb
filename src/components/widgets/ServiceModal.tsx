@@ -40,13 +40,17 @@ export default function ServiceModal() {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 flex bg-black/60 w-screen h-screen z-2000 flex-col justify-center items-center overflow-x-hidden p-4">
+      <div
+        onClick={closeModal}
+        className="fixed inset-0 flex bg-black/60 w-screen h-screen z-2000 flex-col justify-center items-center overflow-x-hidden p-4 cursor-pointer"
+      >
         <motion.div
+          onClick={(e) => e.stopPropagation()}
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
           transition={{ duration: 0.3 }}
-          className="relative bg-white px-8 py-12 flex flex-col justify-center items-center w-full max-w-[600px] rounded-3xl shadow-2xl overflow-hidden"
+          className="relative bg-white px-8 py-12 flex flex-col justify-center items-center w-full max-w-[600px] rounded-3xl shadow-2xl overflow-hidden cursor-auto"
         >
           {/* Background shapes */}
           <img

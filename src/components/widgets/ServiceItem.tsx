@@ -22,7 +22,7 @@ export default function ServiceItem({ icon, titleOne, titleTwo, text, modalType 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5 }}
-      className="group col-span-12 lg:col-span-4 relative shadow-[0_4px_20px_rgba(0,0,0,0.06)] my-4 p-8 rounded-2xl border-2 border-transparent hover:border-cabuwebMedium hover:shadow-[0_10px_30px_rgba(0,116,255,0.08)] transition-all duration-300 bg-white"
+      className="group col-span-12 lg:col-span-4 relative shadow-[0_8px_30px_rgba(0,0,0,0.04)] my-4 p-8 rounded-2xl border border-zinc-100 hover:border-cabuwebLight/50 hover:shadow-[0_20px_40px_rgba(0,116,255,0.12)] hover:bg-linear-to-br hover:from-white hover:to-blue-50/40 transition-all duration-500 bg-white"
     >
       {/* Dynamic animated decorative triangles using hover states */}
       <img
