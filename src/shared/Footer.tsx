@@ -6,18 +6,10 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { submitContactForm } from "@/app/actions/contact";
-
-// EmailJS Keys
-const EMAILJS_CONFIG = {
-  publicKey: "user_w5bQqSa3wGzfuaGANvzru",
-  serviceId: "service_1hnq2yg",
-  templateId: "template_exbq856",
-};
 
 // Form validation schema
 const contactSchema = z.object({
@@ -79,7 +71,7 @@ export default function Footer() {
       // 1. Obtener Token de reCAPTCHA v3
       const token = await executeRecaptcha("contact");
 
-      // 2. Validar Token y Guardar en Supabase a través del Servidor
+      // 2. Validar Token, Enviar EmailJS y Guardar en Supabase a través del Servidor
       await submitContactForm(
         {
           name: data.name,
@@ -90,30 +82,15 @@ export default function Footer() {
         token
       );
 
-      // 3. Enviar email vía EmailJS (Solo si el servidor aprueba)
-      const response = await emailjs.send(
-        EMAILJS_CONFIG.serviceId,
-        EMAILJS_CONFIG.templateId,
-        {
-          name: data.name,
-          email: data.email,
-          type: typeLabel,
-          message: data.message,
-        },
-        EMAILJS_CONFIG.publicKey
-      );
-
-      if (response.status === 200) {
-        toast.success("¡Mensaje enviado satisfactoriamente!", {
-          id: toastId,
-        });
-        reset();
-        router.push("/gracias");
-      }
-    } catch (error) {
+      toast.success("¡Mensaje enviado satisfactoriamente!", {
+        id: toastId,
+      });
+      reset();
+      router.push("/gracias");
+    } catch (error: any) {
       toast.error("No se pudo enviar el mensaje.", {
         id: toastId,
-        description: "Inténtalo de nuevo más tarde.",
+        description: error.message || "Inténtalo de nuevo más tarde.",
       });
     } finally {
       setLoading(false);
