@@ -291,6 +291,18 @@ export default function Footer() {
                     )}
                   </button>
                 </div>
+                
+                <p className="text-[10px] text-zinc-600 mt-2 text-center font-helveticaRoman">
+                  Este sitio está protegido por reCAPTCHA y aplican la{" "}
+                  <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                    Política de Privacidad
+                  </a>{" "}
+                  y los{" "}
+                  <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                    Términos de Servicio
+                  </a>{" "}
+                  de Google.
+                </p>
               </form>
             </div>
           </div>

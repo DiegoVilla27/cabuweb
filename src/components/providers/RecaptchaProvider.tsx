@@ -16,6 +16,11 @@ export default function RecaptchaProvider({
 
   return (
     <GoogleReCaptchaProvider reCaptchaKey={recaptchaKey}>
+      <style>{`
+        .grecaptcha-badge {
+          visibility: hidden !important;
+        }
+      `}</style>
       {children}
     </GoogleReCaptchaProvider>
   );
