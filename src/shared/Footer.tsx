@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -41,6 +42,7 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 export default function Footer() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const {
@@ -79,9 +81,9 @@ export default function Footer() {
       if (response.status === 200) {
         toast.success("¡Mensaje enviado satisfactoriamente!", {
           id: toastId,
-          description: "En breve un especialista se pondrá en contacto contigo.",
         });
         reset();
+        router.push("/gracias");
       }
     } catch {
       toast.error("No se pudo enviar el mensaje.", {
@@ -233,6 +235,10 @@ export default function Footer() {
                       Acepto las&nbsp;
                       <Link href="/politica-de-privacidad" className="font-helveticaMedium text-zinc-300 hover:text-white transition-colors" target="_blank">
                         Políticas de privacidad
+                      </Link>
+                      &nbsp;y&nbsp;
+                      <Link href="/terminos-y-condiciones" className="font-helveticaMedium text-zinc-300 hover:text-white transition-colors" target="_blank">
+                        Términos y condiciones
                       </Link>
                     </label>
                   </div>

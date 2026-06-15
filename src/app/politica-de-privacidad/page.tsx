@@ -9,127 +9,157 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-zinc-50 py-16 px-6 lg:px-24">
-      <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-zinc-100 p-8 xs:p-12 xl:p-16">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12 border-b border-zinc-100 pb-8">
+    <div className="min-h-screen bg-zinc-950 text-zinc-400 py-16 px-6 lg:px-24 relative overflow-hidden">
+      {/* Subtle Dotted Pattern */}
+      <div className="fixed inset-0 z-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[24px_24px] pointer-events-none" />
+
+      {/* Background Ambience Glow */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[500px] bg-cabuwebMedium/10 blur-[150px] rounded-full pointer-events-none" />
+
+      <div className="max-w-4xl mx-auto bg-zinc-900/40 backdrop-blur-xl rounded-4xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] border border-white/10 p-8 xs:p-12 xl:p-16 relative z-10 mt-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12 border-b border-white/10 pb-8">
           <figure className="max-w-[150px]">
-            <img src="/img/logos/logo-blue.svg" alt="Logo Cabuweb Azul" className="w-full" />
+            <img src="/img/logos/logo-white.svg" alt="Logo Cabuweb White" className="w-full" />
           </figure>
           <Link
             href="/"
-            className="flex items-center gap-2 text-zinc-500 hover:text-cabuwebMedium text-sm font-helveticaMedium transition-colors"
+            className="group flex items-center gap-2 text-zinc-500 hover:text-white text-sm font-helveticaMedium transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             <span>Volver al inicio</span>
           </Link>
         </div>
 
-        <h1 className="font-lemonBold text-md xs:text-lg md:text-xl text-zinc-800 uppercase tracking-wide mb-8">
-          POLÍTICA DE PRIVACIDAD
+        <h1 className="font-lemonLight text-2xl xs:text-3xl md:text-4xl text-zinc-100 uppercase tracking-wide leading-tight mb-8">
+          Política de <br />
+          <span className="font-lemonBold text-transparent bg-clip-text bg-linear-to-r from-cabuwebMedium to-blue-400">
+            Privacidad
+          </span>
         </h1>
 
-        <div className="space-y-6 text-zinc-600 font-helveticaRoman text-xs xs:text-sm md:text-base leading-relaxed">
+        <div className="space-y-8 font-helveticaRoman text-sm md:text-base leading-relaxed text-zinc-400">
           <p>
-            La presente Política de Privacidad establece los términos en que{" "}
-            <span className="font-bold text-zinc-850">Cabuweb</span> usa y protege la información que es proporcionada por sus
-            usuarios al momento de utilizar su sitio web. Esta compañía está comprometida con la seguridad de los datos de sus
-            usuarios. Cuando le pedimos llenar los campos de información personal con la cual usted pueda ser identificado, lo
-            hacemos asegurando que sólo se empleará de acuerdo con los términos de este documento. Sin embargo, esta Política de
-            Privacidad puede cambiar con el tiempo o ser actualizada, por lo que le recomendamos y enfatizamos revisar
-            continuamente esta página para asegurarse de que está de acuerdo con dichos cambios.
+            En cumplimiento del <strong>Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016 (RGPD)</strong>,
+            y la <strong>Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD)</strong>,
+            <span className="font-bold text-white">Cabuweb</span> le informa sobre su Política de Privacidad respecto al tratamiento
+            y protección de los datos de carácter personal de los usuarios que puedan ser recabados por la navegación o contratación de
+            servicios a través del sitio web.
           </p>
 
           <div>
-            <h2 className="font-lemonBold text-xs xs:text-sm md:text-md text-zinc-800 mt-8 mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block"></span>
-              <span>Información que es recogida</span>
+            <h2 className="font-lemonBold text-sm md:text-md text-white mt-10 mb-4 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block shadow-[0_0_10px_rgba(0,116,255,0.8)]"></span>
+              <span>1. Responsable del Tratamiento</span>
+            </h2>
+            <ul className="list-disc list-inside space-y-2 text-zinc-400 marker:text-cabuwebMedium">
+              <li><strong>Titular / Nombre comercial:</strong> Cabuweb</li>
+              <li><strong>Correo electrónico:</strong> cabuweb.info@gmail.com</li>
+              <li><strong>Actividad:</strong> Diseño y desarrollo de software y aplicaciones web/móviles.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="font-lemonBold text-sm md:text-md text-white mt-10 mb-4 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block shadow-[0_0_10px_rgba(0,116,255,0.8)]"></span>
+              <span>2. Finalidad del tratamiento de los datos personales</span>
             </h2>
             <p>
-              Nuestro sitio web podrá recoger información personal, por ejemplo:{" "}
-              <span className="italic font-helveticaMedium text-zinc-700">Nombre</span>,{" "}
-              <span className="italic font-helveticaMedium text-zinc-700">información de contacto</span> como su{" "}
-              <span className="italic font-helveticaMedium text-zinc-700">dirección de correo electrónico</span> e{" "}
-              <span className="italic font-helveticaMedium text-zinc-700">información demográfica</span>. Asimismo, cuando sea
-              necesario, podrá ser requerida información específica para procesar algún pedido o realizar una entrega o
-              facturación.
+              Cabuweb tratará la información que nos proporcione con las siguientes finalidades:
+            </p>
+            <ul className="list-disc list-inside mt-4 space-y-2 text-zinc-400 marker:text-cabuwebMedium">
+              <li>Responder a las consultas, solicitudes o peticiones realizadas a través del formulario de contacto.</li>
+              <li>Elaborar presupuestos personalizados sobre desarrollo de software, web o aplicaciones móviles.</li>
+              <li>Gestionar la relación comercial o profesional en caso de contratación de nuestros servicios.</li>
+              <li>Enviar comunicaciones comerciales o boletines de noticias, únicamente si el usuario ha dado su consentimiento expreso.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="font-lemonBold text-sm md:text-md text-white mt-10 mb-4 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block shadow-[0_0_10px_rgba(0,116,255,0.8)]"></span>
+              <span>3. Legitimación para el tratamiento de sus datos</span>
+            </h2>
+            <p>
+              La base legal para el tratamiento de sus datos es el <strong>consentimiento expreso</strong> del interesado.
+              Al marcar la casilla de aceptación de la Política de Privacidad en nuestros formularios de contacto, usted
+              consiente libre, específica, informada e inequívocamente el tratamiento de sus datos para las finalidades indicadas.
+            </p>
+            <p className="mt-4">
+              En caso de contratación de servicios, la base de legitimación será la ejecución de un contrato o la aplicación de medidas precontractuales.
             </p>
           </div>
 
           <div>
-            <h2 className="font-lemonBold text-xs xs:text-sm md:text-md text-zinc-800 mt-8 mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block"></span>
-              <span>Uso de la información recogida</span>
+            <h2 className="font-lemonBold text-sm md:text-md text-white mt-10 mb-4 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block shadow-[0_0_10px_rgba(0,116,255,0.8)]"></span>
+              <span>4. Conservación de los datos</span>
             </h2>
             <p>
-              Nuestro sitio web emplea la información con el fin de proporcionar el mejor servicio posible, particularmente para
-              mantener un registro de usuarios, de pedidos en caso de que aplique, y mejorar nuestros productos y servicios. Es
-              posible que sean enviados correos electrónicos periódicamente a través de nuestro sitio con ofertas especiales,
-              nuevos productos y otra información publicitaria que consideremos relevante para usted o que pueda brindarle algún
-              beneficio; estos correos electrónicos serán enviados a la dirección que usted preocupe y podrán ser cancelados en
-              cualquier momento.
-            </p>
-            <p className="mt-4">
-              <span className="font-bold text-zinc-800">Cabuweb</span> está altamente comprometido para cumplir con el
-              compromiso de mantener su información segura. Usamos los sistemas más avanzados y los actualizamos constantemente
-              para asegurarnos de que no exista ningún acceso no autorizado.
+              Los datos personales proporcionados se conservarán durante el tiempo estrictamente necesario para cumplir
+              con la finalidad para la que fueron recabados. En caso de solicitar un presupuesto o realizar una consulta,
+              se conservarán hasta la resolución de la misma. En caso de relación contractual, se conservarán durante el
+              tiempo que exija la legislación aplicable (fiscal, mercantil, etc.). En cualquier momento podrá solicitar
+              su supresión.
             </p>
           </div>
 
           <div>
-            <h2 className="font-lemonBold text-xs xs:text-sm md:text-md text-zinc-800 mt-8 mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block"></span>
-              <span>Cookies</span>
+            <h2 className="font-lemonBold text-sm md:text-md text-white mt-10 mb-4 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block shadow-[0_0_10px_rgba(0,116,255,0.8)]"></span>
+              <span>5. Comunicación de datos a terceros</span>
             </h2>
             <p>
-              Una cookie se refiere a un fichero que es enviado con la finalidad de solicitar permiso para almacenarse en su
-              ordenador; al aceptar dicho fichero se crea y la cookie sirve entonces para tener información respecto al tráfico
-              web, y también facilita las futuras visitas a una web recurrente. Otra función que tienen las cookies es que con
-              ellas las web pueden reconocerte individualmente y, por tanto, brindarte el mejor servicio personalizado de su web.
-            </p>
-            <p className="mt-4">
-              Nuestro sitio web emplea las cookies para poder identificar las páginas que son visitadas y su frecuencia. Esta
-              información es empleada únicamente para análisis estadístico y después la información se elimina de forma
-              permanente. Usted puede eliminar las cookies en cualquier momento desde su ordenador. Sin embargo, las cookies
-              ayudan a proporcionar un mejor servicio de los sitios web, estas no dan acceso a información de su ordenador ni de
-              usted, a menos de que usted así lo quiera y la proporcione directamente. Usted puede aceptar o negar el uso de
-              cookies; sin embargo, la mayoría de navegadores aceptan cookies automáticamente, pues sirve para tener un mejor
-              servicio web. También usted puede cambiar la configuración de su ordenador para declinar las cookies. Si se declinan,
-              es posible que no pueda utilizar algunos de nuestros servicios.
+              Cabuweb no venderá, cederá ni distribuirá sus datos personales a terceros sin su consentimiento, salvo
+              obligación legal. No obstante, para prestar servicios estrictamente necesarios para el desarrollo de nuestra
+              actividad (como el envío de correos electrónicos a través de EmailJS o el alojamiento web), compartimos datos
+              con proveedores de servicios bajo sus correspondientes condiciones de privacidad y cumpliendo las normativas vigentes.
             </p>
           </div>
 
           <div>
-            <h2 className="font-lemonBold text-xs xs:text-sm md:text-md text-zinc-800 mt-8 mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block"></span>
-              <span>Enlaces a Terceros</span>
+            <h2 className="font-lemonBold text-sm md:text-md text-white mt-10 mb-4 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block shadow-[0_0_10px_rgba(0,116,255,0.8)]"></span>
+              <span>6. Derechos de los usuarios (Derechos RGPD)</span>
             </h2>
             <p>
-              Este sitio web pudiera contener enlaces a otros sitios que pudieran ser de su interés. Una vez que usted dé clic en
-              estos enlaces y abandone nuestra página, ya no tenemos control sobre el sitio al que es redirigido y, por lo tanto,
-              no somos responsables de los términos o privacidad ni de la protección de sus datos en esos otros sitios terceros.
-              Dichos sitios están sujetos a sus propias políticas de privacidad, por lo cual es recomendable que los consulte
-              para confirmar que usted está de acuerdo con estas.
+              Como usuario, tiene derecho a obtener confirmación sobre si en Cabuweb estamos tratando sus datos personales.
+              Por tanto, tiene derecho a:
+            </p>
+            <ul className="list-disc list-inside mt-4 space-y-2 text-zinc-400 marker:text-cabuwebMedium">
+              <li><strong>Acceder</strong> a sus datos personales.</li>
+              <li>Solicitar la <strong>rectificación</strong> de datos inexactos.</li>
+              <li>Solicitar su <strong>supresión</strong> cuando, entre otros motivos, ya no sean necesarios para los fines que fueron recogidos.</li>
+              <li>Solicitar la <strong>limitación</strong> de su tratamiento, en cuyo caso únicamente los conservaremos para el ejercicio o la defensa de reclamaciones.</li>
+              <li><strong>Oponerse</strong> al tratamiento de sus datos, en cuyo caso Cabuweb dejará de tratarlos, salvo por motivos legítimos imperiosos.</li>
+              <li>Solicitar la <strong>portabilidad</strong> de sus datos.</li>
+            </ul>
+            <p className="mt-4">
+              Para ejercer cualquiera de estos derechos, puede enviar un correo electrónico a <a href="mailto:cabuweb.info@gmail.com" className="text-cabuwebMedium hover:text-white transition-colors">cabuweb.info@gmail.com</a>.
+            </p>
+            <p className="mt-4">
+              Asimismo, si considera que el tratamiento de sus datos personales vulnera la normativa, tiene derecho a
+              presentar una reclamación ante la autoridad de control pertinente, que en España es la <strong>Agencia Española de Protección de Datos (AEPD)</strong>.
             </p>
           </div>
 
           <div>
-            <h2 className="font-lemonBold text-xs xs:text-sm md:text-md text-zinc-800 mt-8 mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block"></span>
-              <span>Control de su información personal</span>
+            <h2 className="font-lemonBold text-sm md:text-md text-white mt-10 mb-4 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-cabuwebMedium inline-block shadow-[0_0_10px_rgba(0,116,255,0.8)]"></span>
+              <span>7. Uso de Cookies</span>
             </h2>
             <p>
-              En cualquier momento usted puede restringir la recopilación o el uso de la información personal que es proporcionada
-              a nuestro sitio web. Cada vez que se le solicite rellenar un formulario, como el de alta de usuario, puede marcar o
-              desmarcar la opción de recibir información por correo electrónico. En caso de que haya marcado la opción de recibir
-              nuestro boletín o publicidad, usted puede cancelarla en cualquier momento.
+              El sitio web de Cabuweb puede utilizar cookies (pequeños archivos de información que el servidor envía al
+              ordenador del usuario) para llevar a cabo determinadas funciones que son consideradas imprescindibles para el
+              correcto funcionamiento y visualización del sitio, así como para analíticas de tráfico. El usuario tiene la
+              posibilidad de configurar su navegador para ser avisado de la recepción de cookies y para impedir su instalación en su equipo.
             </p>
-            <p className="mt-4">
-              Esta compañía no venderá, cederá ni distribuirá la información personal que es recopilada sin su consentimiento,
-              salvo que sea requerido por un juez con una orden judicial.
-            </p>
-            <p className="mt-4">
-              <span className="font-bold text-zinc-800">Cabuweb</span> se reserva el derecho de cambiar los términos de la
-              presente Política de Privacidad en cualquier momento.
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-white/10 text-xs text-zinc-500">
+            <p>
+              <span className="font-bold text-white">Cabuweb</span> se reserva el derecho de modificar la presente Política
+              para adaptarla a novedades legislativas o jurisprudenciales. Estas modificaciones serán válidas desde el momento
+              de su publicación en esta web. <em>Última actualización: Junio de 2026.</em>
             </p>
           </div>
         </div>

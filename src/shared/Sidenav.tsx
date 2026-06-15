@@ -5,10 +5,29 @@ import Link from "next/link";
 import { useStore } from "@/store/useStore";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { NAVIGATION_LINKS } from "@/constants/data";
 
 export default function Sidenav() {
   const { isSidenavOpen, toggleSidenav } = useStore();
+  const pathname = usePathname();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      if (id === "home") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.pushState(null, "", "/");
+      } else {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          window.history.pushState(null, "", `/#${id}`);
+        }
+      }
+    }
+    toggleSidenav();
+  };
 
   return (
     <AnimatePresence>
@@ -34,7 +53,9 @@ export default function Sidenav() {
           >
             {/* Header */}
             <div className="flex justify-between items-center mb-12">
-              <img src="/img/logos/logo-white.svg" alt="Cabuweb" className="h-8 object-contain" />
+              <Link href="/" onClick={(e) => handleNavClick(e, "home")} className="cursor-pointer block">
+                <img src="/img/logos/logo-white.svg" alt="Cabuweb" className="h-8 object-contain" />
+              </Link>
               <button
                 onClick={toggleSidenav}
                 className="p-2 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full text-zinc-400 hover:text-white transition-colors cursor-pointer"
@@ -55,8 +76,8 @@ export default function Sidenav() {
                     key={item.id}
                   >
                     <Link
-                      href={`#${item.id}`}
-                      onClick={toggleSidenav}
+                      href={`/#${item.id}`}
+                      onClick={(e) => handleNavClick(e, item.id)}
                       className="group flex flex-col items-start text-zinc-400 hover:text-white transition-colors cursor-pointer"
                     >
                       <span className="font-lemonLight text-3xl md:text-4xl capitalize tracking-wide drop-shadow-md">
