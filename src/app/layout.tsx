@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import "./globals.css";
 import CookieBanner from "@/components/widgets/CookieBanner";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const viewport: Viewport = {
   themeColor: "#000000",
@@ -175,6 +176,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Analytics />
+        <SpeedInsights />
       </body>
       <GoogleAnalytics gaId="G-8V04X7W300" />
     </html>
