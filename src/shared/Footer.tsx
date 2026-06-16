@@ -35,7 +35,7 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-export default function Footer() {
+function FooterContent() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -293,5 +293,15 @@ export default function Footer() {
         </p>
       </div>
     </footer>
+  );
+}
+
+import RecaptchaProvider from "@/components/providers/RecaptchaProvider";
+
+export default function Footer() {
+  return (
+    <RecaptchaProvider>
+      <FooterContent />
+    </RecaptchaProvider>
   );
 }

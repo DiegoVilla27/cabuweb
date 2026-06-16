@@ -15,7 +15,14 @@ export default function RecaptchaProvider({
   }
 
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={recaptchaKey}>
+    <GoogleReCaptchaProvider 
+      reCaptchaKey={recaptchaKey}
+      scriptProps={{
+        async: true,
+        defer: true,
+        appendTo: "body",
+      }}
+    >
       <style>{`
         .grecaptcha-badge {
           visibility: hidden !important;
