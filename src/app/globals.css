@@ -117,3 +117,20 @@ html {
   visibility: hidden !important;
 }
 
+
+@media (max-width: 768px) {
+  /* Optimización extrema para móviles (evitar cuelgues por GPU) */
+  .blur-\[150px\] {
+    filter: blur(50px) !important;
+  }
+  .blur-\[120px\] {
+    filter: blur(40px) !important;
+  }
+  .backdrop-blur-2xl, .backdrop-blur-xl {
+    backdrop-filter: blur(10px) !important;
+  }
+  .animate-breathe, .animate-aurora-1, .animate-aurora-2 {
+    animation: none !important;
+    transform: none !important;
+  }
+}
