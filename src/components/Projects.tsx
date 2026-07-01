@@ -4,17 +4,15 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import TitleSection from "./widgets/TitleSection";
 import ProjectItem from "./widgets/ProjectItem";
-import { listWeb, listApps, listForYou, Project } from "@/helpers/projectsArrays";
+import { projectsList, Project } from "@/helpers/projectsArrays";
 
 export default function Projects() {
-  const [activeTab, setActiveTab] = useState<"web" | "apps" | "foryou">("web");
-  const [list, setList] = useState<Project[]>(listWeb);
+  const [activeTab, setActiveTab] = useState<"web" | "apps">("web");
 
-  const handleTabChange = (tab: "web" | "apps" | "foryou") => {
+  const filteredList = projectsList.filter((item) => item.category === activeTab);
+
+  const handleTabChange = (tab: "web" | "apps") => {
     setActiveTab(tab);
-    if (tab === "web") setList(listWeb);
-    else if (tab === "apps") setList(listApps);
-    else setList(listForYou);
   };
 
   return (
@@ -39,13 +37,12 @@ export default function Projects() {
             {[
               { id: "web", label: "Páginas web" },
               { id: "apps", label: <>Aplicaciones <span className="hidden md:inline">móviles</span></> },
-              { id: "foryou", label: "Para ti" },
             ].map((tab) => {
               const isActive = activeTab === tab.id;
               return (
                 <button
                   key={tab.id}
-                  onClick={() => handleTabChange(tab.id as "web" | "apps" | "foryou")}
+                  onClick={() => handleTabChange(tab.id as "web" | "apps")}
                   className={`flex-1 text-center py-3 px-2 text-xs md:text-sm uppercase font-helveticaBold cursor-pointer rounded-full transition-all duration-300 ${isActive
                     ? "bg-cabuwebMedium text-white shadow-[0_0_20px_rgba(0,116,255,0.4)] scale-[1.02]"
                     : "text-zinc-500 hover:text-zinc-300"
@@ -61,7 +58,7 @@ export default function Projects() {
         {/* Grid container with animation */}
         <div className="grid grid-cols-12 gap-8 lg:gap-12 relative z-10 mt-8">
           <AnimatePresence mode="popLayout">
-            {list.map((item, i) => (
+            {filteredList.map((item, i) => (
               <motion.div
                 layout
                 key={item.id + "-" + activeTab}
