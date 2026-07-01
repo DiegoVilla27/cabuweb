@@ -55,7 +55,6 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* Grid container with animation */}
         <div className="grid grid-cols-12 gap-8 lg:gap-12 relative z-10 mt-8">
           <AnimatePresence mode="popLayout">
             {filteredList.map((item, i) => (
