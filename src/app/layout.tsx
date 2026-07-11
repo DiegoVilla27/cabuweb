@@ -12,54 +12,96 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.cabuweb.com"),
-  title: "Cabuweb - Desarrollo de software",
+  title: {
+    default: "Cabuweb — Agencia de Software Premium | Web, Apps y Software a Medida",
+    template: "%s | Cabuweb",
+  },
   description:
-    "Empresa de software. Diseño, desarrollo e implementación de Páginas Web, Aplicaciones Móviles y Software a la medida.",
+    "Cabuweb es una agencia de desarrollo de software de élite. Creamos páginas web de alto rendimiento, aplicaciones móviles (iOS y Android) y software a medida para empresas y startups en España y Latinoamérica.",
   keywords: [
-    "desarrollo web premium",
+    // España
+    "desarrollo web españa",
+    "agencia de software españa",
+    "diseño web valencia",
+    "desarrollo web valencia",
+    "agencia digital españa",
+    // LATAM
+    "desarrollo web colombia",
+    "desarrollo web méxico",
+    "agencia de desarrollo software colombia",
+    "desarrollo web bogotá",
+    "agencia digital méxico",
+    // Servicios
     "agencia de desarrollo de software",
+    "desarrollo web premium",
+    "páginas web profesionales",
+    "landing page profesional",
+    "e-commerce a medida",
     "aplicaciones móviles nativas",
-    "aplicaciones híbridas",
+    "aplicaciones híbridas react native",
     "desarrollo de apps iOS y Android",
     "software a la medida",
-    "diseño web corporativo",
-    "desarrollo web españa",
-    "desarrollo de software colombia",
-    "transformación digital",
-    "agencia tecnológica",
-    "creación de sitios web",
+    "software empresarial",
+    "automatización de procesos empresariales",
+    "diseño UI UX premium",
+    // Intención comercial
+    "cotizar página web",
+    "cotizar aplicación móvil",
+    "empresa de software",
+    "transformación digital empresas",
   ],
-  authors: [{ name: "Cabuweb" }],
+  authors: [{ name: "Cabuweb", url: "https://www.cabuweb.com" }],
   creator: "Cabuweb",
+  publisher: "Cabuweb",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   manifest: "/manifest.json",
   alternates: {
-    canonical: "/",
+    canonical: "https://www.cabuweb.com",
+    languages: {
+      "es": "https://www.cabuweb.com",
+      "en": "https://www.cabuweb.com",
+      "x-default": "https://www.cabuweb.com",
+    },
   },
   openGraph: {
     url: "https://www.cabuweb.com",
     type: "website",
-    title:
-      "Empresa de software. Realizamos páginas web, aplicaciones móviles y software a la medida para tu negocio.",
+    title: "Cabuweb — Agencia de Software Premium | Web, Apps y Software a Medida",
     description:
-      "Diseñamos, desarrollamos e implementamos Páginas Web, Aplicaciones Móviles y Software a la medida. Llevando a tu negocio mas allá de la competencia. COTIZA AHORA!",
+      "Construimos ecosistemas tecnológicos de alto rendimiento. Páginas web, aplicaciones móviles y software a medida para escalar tu negocio. ¡Cotiza ahora!",
     images: [
       {
-        url: "/img/seo/cabuweb_op.jpg",
-        width: 600,
-        height: 600,
-        alt: "Cabuweb Publicity Normal",
+        url: "https://www.cabuweb.com/img/seo/cabuweb_op.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Cabuweb — Agencia de Software Premium",
+        type: "image/jpeg",
       },
     ],
     locale: "es_ES",
+    alternateLocale: ["en_US"],
     siteName: "Cabuweb",
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Empresa de software. Realizamos páginas web, aplicaciones móviles y software a la medida para tu negocio.",
+    site: "@cabuweb",
+    creator: "@cabuweb",
+    title: "Cabuweb — Agencia de Software Premium",
     description:
-      "Diseñamos, desarrollamos e implementamos Páginas Web, Aplicaciones Móviles y Software a la medida. Llevando a tu negocio mas allá de la competencia. COTIZA AHORA!",
-    images: ["/img/seo/cabuweb_op.jpg"],
+      "Construimos ecosistemas tecnológicos de alto rendimiento. Páginas web, aplicaciones móviles y software a medida para escalar tu negocio.",
+    images: [{
+      url: "https://www.cabuweb.com/img/seo/cabuweb_op.jpg",
+      alt: "Cabuweb — Agencia de Software Premium",
+    }],
   },
   icons: {
     icon: [
@@ -91,50 +133,94 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const jsonLd = {
-    "@context": "http://schema.org",
-    "@type": "LocalBusiness",
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
     name: "Cabuweb",
+    description:
+      "Agencia de desarrollo de software premium especializada en páginas web de alto rendimiento, aplicaciones móviles nativas e híbridas y software a la medida para empresas y startups.",
+    url: "https://www.cabuweb.com",
+    logo: "https://www.cabuweb.com/img/seo/cabuweb_op.jpg",
+    image: "https://www.cabuweb.com/img/seo/cabuweb_op.jpg",
+    email: "cabuweb.info@gmail.com",
+    telephone: "(+34) 658074821",
     address: {
       "@type": "PostalAddress",
       streetAddress: "Plaza dels peixets",
       addressLocality: "Port Saplaya",
       addressRegion: "Valencia",
       postalCode: "46120",
+      addressCountry: "ES",
     },
-    image: "https://cabuweb.com/img/seo/cabuweb_op.jpg",
-    email: "cabuweb.info@gmail.com",
-    telephone: "(+34) 658074821",
-    url: "https://cabuweb.com",
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "39.509311",
+      longitude: "-0.321756",
+    },
+    areaServed: [
+      { "@type": "Country", name: "España" },
+      { "@type": "Country", name: "Colombia" },
+      { "@type": "Country", name: "México" },
+      { "@type": "Country", name: "Argentina" },
+    ],
+    serviceType: [
+      "Desarrollo Web",
+      "Desarrollo de Aplicaciones Móviles",
+      "Software a la Medida",
+      "Diseño UI/UX",
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Servicios de Software",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Landing Page Premium",
+            description: "Página web de aterrizaje personalizada con diseño UI/UX exclusivo, carga ultra rápida y SEO nativo.",
+          },
+          priceCurrency: "USD",
+          price: "399",
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Tienda Virtual (E-commerce)",
+            description: "Tienda online con catálogo autogestionable, pasarela de pagos integrada y panel de pedidos.",
+          },
+          priceCurrency: "USD",
+          price: "899",
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "E-commerce Custom",
+            description: "Plataforma de comercio electrónico de alto volumen con automatizaciones, multi-idioma y soporte 24/7.",
+          },
+          priceCurrency: "USD",
+          price: "1699",
+        },
+      ],
+    },
     sameAs: [
       "https://www.facebook.com/cabuweb",
       "https://www.instagram.com/cabuweb",
       "https://www.twitter.com/cabuweb",
       "https://www.linkedin.com/in/cabuweb-software-07b3b8209",
     ],
-    paymentAccepted: ["Credit Card"],
+    paymentAccepted: ["Credit Card", "Bank Transfer"],
     openingHours: "Mo,Tu,We,Th,Fr,Sa,Su 08:30-18:30",
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday",
-        ],
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         opens: "08:30",
         closes: "18:30",
       },
     ],
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: "39.509311",
-      longitude: "-0.321756",
-    },
-    priceRange: "$",
+    priceRange: "$$",
   };
 
   return (
