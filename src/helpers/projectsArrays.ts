@@ -18,4 +18,6 @@ export const projectsList: Project[] = [
   { id: 8, img: "/img/projects/webs/vet-web.webp", name: "Vet Web", url: "https://vet-web-delta.vercel.app", category: "web" },
   { id: 9, img: "/img/projects/webs/shoes-web.webp", name: "Shoes Web", url: "https://shoes-web-eight.vercel.app", category: "web" },
   { id: 10, img: "/img/projects/webs/derby-web.webp", name: "Derby Web", url: "https://derby-web-tan.vercel.app", category: "web" },
+  { id: 11, img: "/img/projects/webs/boutique-web.webp", name: "Boutique Web", url: "https://boutique-web-kappa.vercel.app", category: "web" },
+  { id: 12, img: "/img/projects/webs/pizza-web.webp", name: "Pizza Web", url: "https://pizza-web-dun.vercel.app", category: "web" },
 ];
