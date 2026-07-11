@@ -42,6 +42,10 @@ export async function submitContactForm(data: any, token: string) {
         email: data.email,
         type: data.type,
         message: data.message,
+        company: data.company || "No especificada",
+        phone: data.phone,
+        budget: data.budget,
+        business_type: data.business_type,
       },
     }),
   });
@@ -58,6 +62,10 @@ export async function submitContactForm(data: any, token: string) {
     email: data.email,
     type: data.type,
     message: data.message,
+    company: data.company || null,
+    phone: data.phone,
+    budget: data.budget,
+    business_type: data.business_type,
   }]);
 
   if (error) {

@@ -3,13 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { submitContactForm } from "@/app/actions/contact";
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 
 // Form validation schema
 const contactSchema = z.object({
@@ -23,6 +25,20 @@ const contactSchema = z.object({
     .min(1, "El correo electrónico es requerido.")
     .email("El correo electrónico es inválido.")
     .max(40, "El correo es demasiado largo (máximo 40 caracteres)."),
+  company: z
+    .string()
+    .max(50, "El nombre de la empresa es demasiado largo (máximo 50 caracteres).")
+    .optional()
+    .or(z.literal("")),
+  phone: z
+    .string()
+    .min(6, "El número de teléfono es requerido y debe ser válido."),
+  budget: z
+    .string()
+    .min(1, "El presupuesto es requerido."),
+  business_type: z
+    .string()
+    .min(1, "El tipo de negocio es requerido."),
   type: z.enum(["web", "app", "software"]),
   message: z
     .string()
@@ -44,12 +60,17 @@ function FooterContent() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
       name: "",
       email: "",
+      company: "",
+      phone: "",
+      budget: "",
+      business_type: "",
       type: "web",
       message: "",
       check: false,
@@ -68,6 +89,23 @@ function FooterContent() {
     try {
       const typeLabel = data.type === "web" ? "Página Web" : data.type === "app" ? "Aplicación Móvil" : "Software a la medida";
 
+      const budgetLabelMap: Record<string, string> = {
+        less_2k: "Menos de $2,000 USD",
+        "2k_5k": "$2,000 USD - $5,000 USD",
+        "5k_10k": "$5,000 USD - $10,000 USD",
+        "10k_25k": "$10,000 USD - $25,000 USD",
+        more_25k: "Más de $25,000 USD",
+      };
+
+      const businessTypeLabelMap: Record<string, string> = {
+        ecommerce: "E-commerce / Tienda Online",
+        saas: "SaaS / Startup / Prod. Digital",
+        corporative: "Web Corporativo / Landing",
+        mobile: "App Móvil (iOS & Android)",
+        custom: "Software a la Medida / ERP",
+        other: "Otro",
+      };
+
       // 1. Obtener Token de reCAPTCHA v3
       const token = await executeRecaptcha("contact");
 
@@ -76,6 +114,10 @@ function FooterContent() {
         {
           name: data.name,
           email: data.email,
+          company: data.company,
+          phone: data.phone,
+          budget: budgetLabelMap[data.budget] || data.budget,
+          business_type: businessTypeLabelMap[data.business_type] || data.business_type,
           type: typeLabel,
           message: data.message,
         },
@@ -197,15 +239,106 @@ function FooterContent() {
                   </div>
                 )}
 
+                {/* Company & Phone Row */}
+                <div className="grid grid-cols-2 gap-5">
+                  <div className="col-span-2 sm:col-span-1 flex flex-col relative group">
+                    <input
+                      type="text"
+                      className={`w-full bg-zinc-950/50 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-cabuwebMedium focus:bg-white/5 transition-all ${errors.company ? "border-red-500/50 focus:border-red-500" : ""}`}
+                      placeholder="Empresa (Opcional)"
+                      {...register("company")}
+                    />
+                  </div>
+                  <div className="col-span-2 sm:col-span-1 flex flex-col relative group contact-phone-input">
+                    <Controller
+                      name="phone"
+                      control={control}
+                      render={({ field }) => (
+                        <PhoneInput
+                          defaultCountry="co"
+                          value={field.value}
+                          onChange={field.onChange}
+                          className={`w-full bg-zinc-950/50 border rounded-xl flex items-center transition-all ${
+                            errors.phone 
+                              ? "border-red-500/50 focus-within:border-red-500" 
+                              : "border-white/10 focus-within:border-cabuwebMedium focus-within:bg-white/5"
+                          }`}
+                          style={{
+                            '--react-international-phone-background-color': 'transparent',
+                            '--react-international-phone-border-color': 'transparent',
+                            '--react-international-phone-text-color': '#e4e4e7',
+                            '--react-international-phone-selected-dial-code-text-color': '#e4e4e7',
+                            '--react-international-phone-country-selector-background-color-hover': 'rgba(255, 255, 255, 0.05)',
+                          } as React.CSSProperties}
+                          inputClassName="w-full bg-transparent border-0 px-4 py-3.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:ring-0"
+                          countrySelectorStyleProps={{
+                            buttonClassName: "bg-transparent border-0 px-3 py-3.5 hover:bg-white/5 transition-all h-full rounded-l-xl flex items-center justify-center",
+                            dropdownStyleProps: {
+                              className: "bg-zinc-900 border border-white/10 rounded-xl text-zinc-200 text-sm max-h-60 overflow-y-auto"
+                            }
+                          }}
+                        />
+                      )}
+                    />
+                  </div>
+                </div>
+
+                {/* Error messages for Row 2 */}
+                {(errors.company || errors.phone) && (
+                  <div className="flex justify-between -mt-3">
+                    <small className="text-red-400 font-helveticaRoman text-xs pl-1">{errors.company?.message}</small>
+                    <small className="text-red-400 font-helveticaRoman text-xs pl-1">{errors.phone?.message}</small>
+                  </div>
+                )}
+
+                {/* Business Type & Budget Row */}
+                <div className="grid grid-cols-2 gap-5">
+                  <div className="col-span-2 sm:col-span-1 flex flex-col relative group">
+                    <select
+                      className={`w-full bg-zinc-950/50 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-zinc-400 focus:outline-none focus:border-cabuwebMedium focus:text-zinc-200 focus:bg-white/5 transition-all cursor-pointer appearance-none ${errors.business_type ? "border-red-500/50 focus:border-red-500" : ""}`}
+                      {...register("business_type")}
+                    >
+                      <option value="" className="bg-zinc-900 text-zinc-500">Tipo de negocio</option>
+                      <option value="ecommerce" className="bg-zinc-900 text-zinc-200">E-commerce / Tienda Online</option>
+                      <option value="saas" className="bg-zinc-900 text-zinc-200">SaaS / Startup / Prod. Digital</option>
+                      <option value="corporative" className="bg-zinc-900 text-zinc-200">Web Corporativo / Landing</option>
+                      <option value="mobile" className="bg-zinc-900 text-zinc-200">App Móvil (iOS & Android)</option>
+                      <option value="custom" className="bg-zinc-900 text-zinc-200">Software a la Medida / ERP</option>
+                      <option value="other" className="bg-zinc-900 text-zinc-200">Otro</option>
+                    </select>
+                  </div>
+                  <div className="col-span-2 sm:col-span-1 flex flex-col relative group">
+                    <select
+                      className={`w-full bg-zinc-950/50 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-zinc-400 focus:outline-none focus:border-cabuwebMedium focus:text-zinc-200 focus:bg-white/5 transition-all cursor-pointer appearance-none ${errors.budget ? "border-red-500/50 focus:border-red-500" : ""}`}
+                      {...register("budget")}
+                    >
+                      <option value="" className="bg-zinc-900 text-zinc-500">Presupuesto estimado (USD)</option>
+                      <option value="less_2k" className="bg-zinc-900 text-zinc-200">Menos de $2,000 USD</option>
+                      <option value="2k_5k" className="bg-zinc-900 text-zinc-200">$2,000 USD - $5,000 USD</option>
+                      <option value="5k_10k" className="bg-zinc-900 text-zinc-200">$5,000 USD - $10,000 USD</option>
+                      <option value="10k_25k" className="bg-zinc-900 text-zinc-200">$10,000 USD - $25,000 USD</option>
+                      <option value="more_25k" className="bg-zinc-900 text-zinc-200">Más de $25,000 USD</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Error messages for Row 3 */}
+                {(errors.business_type || errors.budget) && (
+                  <div className="flex justify-between -mt-3">
+                    <small className="text-red-400 font-helveticaRoman text-xs pl-1">{errors.business_type?.message}</small>
+                    <small className="text-red-400 font-helveticaRoman text-xs pl-1">{errors.budget?.message}</small>
+                  </div>
+                )}
+
                 {/* Service Type */}
                 <div className="flex flex-col relative group">
                   <select
                     className="w-full bg-zinc-950/50 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-zinc-400 focus:outline-none focus:border-cabuwebMedium focus:text-zinc-200 focus:bg-white/5 transition-all cursor-pointer appearance-none"
                     {...register("type")}
                   >
-                    <option value="web" className="bg-zinc-900 text-zinc-200">Página Web</option>
-                    <option value="app" className="bg-zinc-900 text-zinc-200">Aplicación Móvil</option>
-                    <option value="software" className="bg-zinc-900 text-zinc-200">Software a la medida</option>
+                    <option value="web" className="bg-zinc-900 text-zinc-200">Servicio: Página Web</option>
+                    <option value="app" className="bg-zinc-900 text-zinc-200">Servicio: Aplicación Móvil</option>
+                    <option value="software" className="bg-zinc-900 text-zinc-200">Servicio: Software a la medida</option>
                   </select>
                 </div>
 
