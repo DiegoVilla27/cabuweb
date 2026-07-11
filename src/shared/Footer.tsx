@@ -148,7 +148,7 @@ function FooterContent() {
         <div className="max-w-7xl mx-auto grid grid-cols-12 gap-8 lg:gap-16 pb-24">
 
           {/* Logo and About */}
-          <div className="col-span-12 lg:col-span-4 lg:mt-8">
+          <div className="col-span-12 lg:col-span-3 lg:mt-8">
             <div className="px-4">
               <Link href="#home" className="cursor-pointer">
                 <figure className="max-w-[180px]">
@@ -201,7 +201,7 @@ function FooterContent() {
           </div>
 
           {/* Contact Form */}
-          <div className="col-span-12 lg:col-span-5 mt-12 lg:mt-0 z-20 relative">
+          <div className="col-span-12 lg:col-span-6 mt-12 lg:mt-0 z-20 relative">
             <div className="bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-4xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
               <h3 className="font-lemonLight text-2xl md:text-3xl text-zinc-100 tracking-wide">
                 Escalemos tu <br /><span className="font-lemonBold text-white">Empresa</span>
@@ -264,17 +264,31 @@ function FooterContent() {
                               : "border-white/10 focus-within:border-cabuwebMedium focus-within:bg-white/5"
                           }`}
                           style={{
+                            height: "50px",
+                            '--react-international-phone-height': '48px',
                             '--react-international-phone-background-color': 'transparent',
                             '--react-international-phone-border-color': 'transparent',
                             '--react-international-phone-text-color': '#e4e4e7',
                             '--react-international-phone-selected-dial-code-text-color': '#e4e4e7',
                             '--react-international-phone-country-selector-background-color-hover': 'rgba(255, 255, 255, 0.05)',
+                            '--react-international-phone-dropdown-item-background-color': '#18181b',
+                            '--react-international-phone-selected-dropdown-item-background-color': 'rgba(255, 255, 255, 0.1)',
+                            '--react-international-phone-focused-dropdown-item-background-color': 'rgba(255, 255, 255, 0.05)',
                           } as React.CSSProperties}
-                          inputClassName="w-full bg-transparent border-0 px-4 py-3.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:ring-0"
+                          inputClassName="w-full bg-transparent border-0 pl-5 pr-4 py-3.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:ring-0"
                           countrySelectorStyleProps={{
-                            buttonClassName: "bg-transparent border-0 px-3 py-3.5 hover:bg-white/5 transition-all h-full rounded-l-xl flex items-center justify-center",
+                            buttonClassName: "bg-transparent border-0 py-3.5 hover:bg-white/5 transition-all h-full rounded-l-xl flex items-center justify-center",
+                            buttonStyle: {
+                              paddingLeft: "16px",
+                              paddingRight: "8px",
+                            },
+                            flagClassName: "ml-1",
                             dropdownStyleProps: {
-                              className: "bg-zinc-900 border border-white/10 rounded-xl text-zinc-200 text-sm max-h-60 overflow-y-auto"
+                              className: "border border-white/10 rounded-xl text-zinc-200 text-sm max-h-60 overflow-y-auto z-50",
+                              style: {
+                                backgroundColor: "#18181b",
+                                color: "#e4e4e7",
+                              }
                             }
                           }}
                         />
