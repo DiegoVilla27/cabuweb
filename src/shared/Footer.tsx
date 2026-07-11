@@ -255,14 +255,13 @@ function FooterContent() {
                       control={control}
                       render={({ field }) => (
                         <PhoneInput
-                          defaultCountry="co"
+                          defaultCountry="es"
                           value={field.value}
                           onChange={field.onChange}
-                          className={`w-full bg-zinc-950/50 border rounded-xl flex items-center transition-all ${
-                            errors.phone 
-                              ? "border-red-500/50 focus-within:border-red-500" 
+                          className={`w-full bg-zinc-950/50 border rounded-xl flex items-center transition-all ${errors.phone
+                              ? "border-red-500/50 focus-within:border-red-500"
                               : "border-white/10 focus-within:border-cabuwebMedium focus-within:bg-white/5"
-                          }`}
+                            }`}
                           style={{
                             height: "50px",
                             '--react-international-phone-height': '48px',
@@ -415,7 +414,7 @@ function FooterContent() {
                     )}
                   </button>
                 </div>
-                
+
                 <p className="text-[10px] text-zinc-600 mt-2 text-center font-helveticaRoman">
                   Este sitio está protegido por reCAPTCHA y aplican la{" "}
                   <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
