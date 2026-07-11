@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Project } from "@/helpers/projectsArrays";
 
 interface ProjectItemProps {
@@ -26,7 +27,7 @@ export default function ProjectItem({ item }: ProjectItemProps) {
 
   return (
     <div className="group transition-all duration-500 cursor-pointer z-10 text-center w-full max-w-[400px] mx-auto perspective-1000">
-      <a href={item.url} target="_blank" rel="noopener noreferrer" className="block relative">
+      <Link href={`/proyectos/${item.slug}`} className="block relative">
         <h4 className="text-center font-helveticaBold text-xl md:text-2xl text-zinc-200 group-hover:text-white transition-colors tracking-wide drop-shadow-md">
           {item.name}
         </h4>
@@ -82,7 +83,7 @@ export default function ProjectItem({ item }: ProjectItemProps) {
             </button>
           </div>
         </div>
-      </a>
+      </Link>
     </div>
   );
 }
