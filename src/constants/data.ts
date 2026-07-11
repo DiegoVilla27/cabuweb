@@ -1,9 +1,11 @@
 export const NAVIGATION_LINKS = [
-  { id: "home", label: "Inicio" },
+  // { id: "home", label: "Inicio" },
   { id: "services", label: "Servicios" },
   { id: "proyects", label: "Proyectos" },
-  { id: "team", label: "Equipo" },
-  { id: "footer", label: "Contáctanos" },
+  { id: "pricing", label: "Paquetes" },
+  { id: "team", label: "Talento" },
+  { id: "faq", label: "Preguntas" },
+  { id: "footer", label: "Contacto" },
 ];
 
 export const TEAM_MEMBERS = [

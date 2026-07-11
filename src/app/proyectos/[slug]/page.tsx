@@ -10,6 +10,7 @@ import ServiceModal from "@/components/widgets/ServiceModal";
 import { projectsList } from "@/helpers/projectsArrays";
 import { projectDetailsMap } from "@/helpers/projectDetailsData";
 import IframeViewer from "../../../components/IframeViewer";
+import FloatingCta from "@/components/widgets/FloatingCta";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -96,58 +97,60 @@ export default async function ProjectPage({ params }: Props) {
               </p>
             </div>
 
-            {/* Quick Specs / ROI Sidebar */}
-            <div className="col-span-12 lg:col-span-4 bg-zinc-900/50 backdrop-blur-md border border-white/10 p-8 rounded-2xl shadow-xl">
-              <h3 className="font-lemonBold text-sm text-zinc-300 uppercase tracking-widest mb-6 flex items-center gap-2">
-                <Award className="w-5 h-5 text-cabuwebMedium" />
-                Métricas del Proyecto
-              </h3>
+            {/* Quick Specs / ROI Sidebar & Calculator */}
+            <div className="col-span-12 lg:col-span-4 space-y-8">
+              <div className="bg-zinc-900/50 backdrop-blur-md border border-white/10 p-8 rounded-2xl shadow-xl">
+                <h3 className="font-lemonBold text-sm text-zinc-300 uppercase tracking-widest mb-6 flex items-center gap-2">
+                  <Award className="w-5 h-5 text-cabuwebMedium" />
+                  Métricas del Proyecto
+                </h3>
 
-              <div className="grid grid-cols-2 gap-6 mb-8">
-                <div className="border-b border-white/5 pb-4">
-                  <span className="text-2xl md:text-3xl font-lemonBold text-white block">
-                    {detail.specs.performance}
-                  </span>
-                  <span className="text-zinc-500 text-xs uppercase font-helveticaBold">Rendimiento</span>
+                <div className="grid grid-cols-2 gap-6 mb-8">
+                  <div className="border-b border-white/5 pb-4">
+                    <span className="text-2xl md:text-3xl font-lemonBold text-white block">
+                      {detail.specs.performance}
+                    </span>
+                    <span className="text-zinc-500 text-xs uppercase font-helveticaBold">Rendimiento</span>
+                  </div>
+                  <div className="border-b border-white/5 pb-4">
+                    <span className="text-2xl md:text-3xl font-lemonBold text-emerald-400 block">
+                      {detail.specs.seo}
+                    </span>
+                    <span className="text-zinc-500 text-xs uppercase font-helveticaBold">SEO Score</span>
+                  </div>
+                  <div>
+                    <span className="text-2xl md:text-3xl font-lemonBold text-white block">
+                      {detail.specs.loadingTime}
+                    </span>
+                    <span className="text-zinc-500 text-xs uppercase font-helveticaBold">Velocidad</span>
+                  </div>
+                  <div>
+                    <span className="text-2xl md:text-3xl font-lemonBold text-sky-400 block">
+                      {detail.specs.mobileScore}
+                    </span>
+                    <span className="text-zinc-500 text-xs uppercase font-helveticaBold">Móvil</span>
+                  </div>
                 </div>
-                <div className="border-b border-white/5 pb-4">
-                  <span className="text-2xl md:text-3xl font-lemonBold text-emerald-400 block">
-                    {detail.specs.seo}
-                  </span>
-                  <span className="text-zinc-500 text-xs uppercase font-helveticaBold">SEO Score</span>
-                </div>
-                <div>
-                  <span className="text-2xl md:text-3xl font-lemonBold text-white block">
-                    {detail.specs.loadingTime}
-                  </span>
-                  <span className="text-zinc-500 text-xs uppercase font-helveticaBold">Velocidad</span>
-                </div>
-                <div>
-                  <span className="text-2xl md:text-3xl font-lemonBold text-sky-400 block">
-                    {detail.specs.mobileScore}
-                  </span>
-                  <span className="text-zinc-500 text-xs uppercase font-helveticaBold">Móvil</span>
-                </div>
-              </div>
 
-              <div className="flex flex-col gap-4">
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full text-center py-4 bg-cabuwebMedium hover:bg-cabuwebMedium/90 text-white font-lemonLight text-xs tracking-widest uppercase rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(0,116,255,0.3)] hover:scale-[1.02] flex items-center justify-center gap-2"
-                >
-                  Ver Sitio en Vivo
-                  <ExternalLink className="w-4 h-4" />
-                </a>
+                <div className="flex flex-col gap-4">
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full text-center py-4 bg-cabuwebMedium hover:bg-cabuwebMedium/90 text-white font-lemonLight text-xs tracking-widest uppercase rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(0,116,255,0.3)] hover:scale-[1.02] flex items-center justify-center gap-2"
+                  >
+                    Ver Sitio en Vivo
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
 
-                {/* Pre-fill footer form trigger link */}
-                <Link
-                  href="/#footer"
-                  className="w-full text-center py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white font-lemonLight text-xs tracking-widest uppercase rounded-xl transition-all duration-300 hover:scale-[1.02]"
-                >
-                  Quiero una Web Así
-                </Link>
+                  {/* Pre-fill footer form trigger link */}
+                  <Link
+                    href="/#footer"
+                    className="w-full text-center py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white font-lemonLight text-xs tracking-widest uppercase rounded-xl transition-all duration-300 hover:scale-[1.02]"
+                  >
+                    Quiero una Web Así
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -217,11 +220,67 @@ export default async function ProjectPage({ params }: Props) {
                   {detail.technologies.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="px-4 py-1.5 bg-white/5 border border-white/5 rounded-full text-zinc-400 text-xs font-helveticaBold"
+                      className="px-4 py-1.5 bg-white/5 border border-white/5 hover:border-cabuwebMedium/30 hover:text-white hover:bg-cabuwebMedium/5 rounded-full text-zinc-400 text-xs font-helveticaBold transition-all duration-300 cursor-default hover:shadow-[0_0_15px_rgba(0,116,255,0.08)]"
                     >
                       {tech}
                     </span>
                   ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Elite Guarantees Section */}
+          <div className="border-t border-white/10 pt-16 mt-20">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <span className="font-lemonLight text-cabuwebMedium text-xs md:text-sm uppercase tracking-widest block mb-3">
+                Garantías Cabuweb
+              </span>
+              <h2 className="font-lemonLight text-3xl md:text-4xl text-white uppercase tracking-tight leading-none mb-4">
+                Estándares de Ingeniería de Élite
+              </h2>
+              <p className="font-helveticaRoman text-zinc-400 text-sm md:text-base leading-relaxed">
+                Cada línea de código y decisión de diseño está pensada para ofrecer el máximo retorno, velocidad y escalabilidad a tu empresa.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Guarantee 1 */}
+              <div className="bg-zinc-900/40 border border-white/5 p-6 rounded-2xl flex flex-col gap-4 hover:border-cabuwebMedium/20 transition-all duration-300 group">
+                <div className="w-10 h-10 rounded-xl bg-cabuwebMedium/10 border border-cabuwebMedium/20 flex items-center justify-center text-cabuwebMedium group-hover:scale-110 transition-transform">
+                  <Zap className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-lemonBold text-sm text-zinc-200 uppercase tracking-wider mb-2">Velocidad de Carga Crítica</h4>
+                  <p className="font-helveticaRoman text-zinc-400 text-xs leading-relaxed">
+                    Nuestras webs cargan en menos de 1.5 segundos. La velocidad de carga óptima reduce el rebote del usuario y duplica las tasas de conversión.
+                  </p>
+                </div>
+              </div>
+
+              {/* Guarantee 2 */}
+              <div className="bg-zinc-900/40 border border-white/5 p-6 rounded-2xl flex flex-col gap-4 hover:border-cabuwebMedium/20 transition-all duration-300 group">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-lemonBold text-sm text-zinc-200 uppercase tracking-wider mb-2">Arquitectura SEO Nativa</h4>
+                  <p className="font-helveticaRoman text-zinc-400 text-xs leading-relaxed">
+                    Estructuramos tu sitio con HTML5 semántico y esquemas JSON-LD optimizados para que indexe y posicione en los primeros lugares de Google desde el día uno.
+                  </p>
+                </div>
+              </div>
+
+              {/* Guarantee 3 */}
+              <div className="bg-zinc-900/40 border border-white/5 p-6 rounded-2xl flex flex-col gap-4 hover:border-cabuwebMedium/20 transition-all duration-300 group">
+                <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 group-hover:scale-110 transition-transform">
+                  <Cpu className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-lemonBold text-sm text-zinc-200 uppercase tracking-wider mb-2">Código Limpio a la Medida</h4>
+                  <p className="font-helveticaRoman text-zinc-400 text-xs leading-relaxed">
+                    Cero constructores visuales lentos (como WordPress o Elementor). Código optimizado en Next.js para un mantenimiento libre de fallos y máxima seguridad.
+                  </p>
                 </div>
               </div>
             </div>
@@ -234,6 +293,7 @@ export default async function ProjectPage({ params }: Props) {
       <Sidenav />
       <Whatsapp />
       <ServiceModal />
+      <FloatingCta projectName={project.name} />
     </>
   );
 }

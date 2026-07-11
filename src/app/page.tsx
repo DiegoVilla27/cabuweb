@@ -4,7 +4,9 @@ import Whatsapp from "@/shared/Whatsapp";
 import Welcome from "@/components/Welcome";
 import Services from "@/components/Services";
 import Projects from "@/components/Projects";
+import Pricing from "@/components/Pricing";
 import Team from "@/components/Team";
+import Faq from "@/components/Faq";
 import Footer from "@/shared/Footer";
 import ServiceModal from "@/components/widgets/ServiceModal";
 
@@ -29,7 +31,9 @@ export default function Home() {
         <Welcome />
         <Services />
         <Projects />
+        <Pricing />
         <Team />
+        <Faq />
       </main>
       <Footer />
       <Sidenav />

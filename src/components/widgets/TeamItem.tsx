@@ -29,6 +29,7 @@ export default function TeamItem({ item }: TeamItemProps) {
           src={item.img}
           alt={item.name}
           fill
+          sizes="(max-width: 640px) 160px, (max-width: 1024px) 192px, 208px"
           className="object-cover object-top opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-transform duration-700"
         />
       </div>

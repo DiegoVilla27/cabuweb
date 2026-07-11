@@ -6,9 +6,12 @@ import { TEAM_MEMBERS } from "@/constants/data";
 
 export default function Team() {
   return (
-    <section id="team" className="px-6 py-32 relative w-full overflow-hidden">
+    <section id="team" className="px-6 py-32 relative w-full overflow-hidden bg-zinc-900/30 border-t border-b border-white/5">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 z-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-size-[32px_32px] pointer-events-none" />
+
+      {/* Purple ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-900/10 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <TitleSection
