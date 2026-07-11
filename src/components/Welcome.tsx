@@ -3,11 +3,16 @@
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useStore } from "@/store/useStore";
+import { translations } from "@/constants/translations";
 
 export default function Welcome() {
   const { scrollY } = useScroll();
   const backgroundY = useTransform(scrollY, [0, 1000], [0, 300]);
   const contentY = useTransform(scrollY, [0, 1000], [0, 150]);
+  const lang = useStore((state) => state.lang);
+
+  const t = translations[lang].welcome;
 
   return (
     <div className="w-full min-h-screen bg-zinc-950 flex flex-col justify-center items-center relative overflow-hidden">
@@ -35,7 +40,7 @@ export default function Welcome() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-cabuwebLight"></span>
             </span>
             <p className="font-helveticaRoman text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase text-cabuwebMedium drop-shadow-md -mb-1">
-              Software Premium
+              {t.badge}
             </p>
           </motion.div>
 
@@ -45,8 +50,8 @@ export default function Welcome() {
             transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
             className="font-lemonBold text-transparent bg-clip-text bg-linear-to-b from-white to-zinc-500 text-center text-5xl md:text-7xl lg:text-[7rem] leading-[1.1] tracking-tight max-w-5xl drop-shadow-lg"
           >
-            Aceleramos tu <br className="hidden md:block" />
-            <span className="text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.2)]">Crecimiento Digital</span>
+            {t.titlePre} <br className="hidden md:block" />
+            <span className="text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.2)]">{t.titlePost}</span>
           </motion.h1>
 
           <motion.div
@@ -56,34 +61,17 @@ export default function Welcome() {
             className="mt-8 md:mt-12 w-full flex flex-col items-center"
           >
             <p className="font-helveticaRoman text-base md:text-xl lg:text-2xl text-zinc-400 max-w-3xl text-center leading-relaxed drop-shadow">
-              Construimos ecosistemas tecnológicos de alto rendimiento. Desde plataformas web inmersivas hasta sistemas escalables, transformamos tu visión en software de vanguardia que domina el mercado.
+              {t.subtitle}
             </p>
 
             <Link href="#footer" className="mt-12 md:mt-16 group relative inline-flex items-center justify-center">
               <div className="absolute inset-0 bg-cabuwebMedium/20 rounded-full blur-xl group-hover:bg-cabuwebMedium/40 transition-colors duration-500" />
               <button className="relative overflow-hidden font-lemonLight tracking-widest text-xs md:text-sm uppercase bg-zinc-900 border border-white/10 text-white px-10 py-5 rounded-full hover:border-cabuwebMedium transition-all duration-500 flex items-center gap-4 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-                <span className="relative z-10 font-bold">Iniciar Proyecto</span>
+                <span className="relative z-10 font-bold">{t.cta}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform relative z-10" />
               </button>
             </Link>
           </motion.div>
-        </motion.div>
-
-        <motion.div
-          className="relative pb-6 xl:pb-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-        >
-          <Link href="#services" className="cursor-pointer">
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-8 h-12 border-2 border-zinc-600 rounded-full flex justify-center p-1"
-            >
-              <motion.div className="w-1 h-3 bg-zinc-400 rounded-full" />
-            </motion.div>
-          </Link>
         </motion.div>
       </section>
     </div>

@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Monitor, Tablet, Smartphone, RotateCw, ExternalLink, ShieldAlert } from "lucide-react";
+import { useStore } from "@/store/useStore";
+import { translations } from "@/constants/translations";
 
 interface IframeViewerProps {
   url: string;
@@ -15,8 +17,10 @@ export default function IframeViewer({ url, title }: IframeViewerProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [iframeKey, setIframeKey] = useState(0);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-
   const [prevUrl, setPrevUrl] = useState(url);
+
+  const lang = useStore((state) => state.lang);
+  const t = translations[lang].iframeViewer;
 
   if (url !== prevUrl) {
     setPrevUrl(url);
@@ -50,6 +54,12 @@ export default function IframeViewer({ url, title }: IframeViewerProps) {
     }
   };
 
+  const deviceModes = [
+    { id: "desktop", icon: Monitor, label: t.desktop },
+    { id: "tablet", icon: Tablet, label: t.tablet },
+    { id: "mobile", icon: Smartphone, label: t.mobile },
+  ];
+
   return (
     <div className="w-full">
       {/* Device Toolbar */}
@@ -63,11 +73,7 @@ export default function IframeViewer({ url, title }: IframeViewerProps) {
 
         {/* Device Selection Tabs */}
         <div className="flex items-center bg-zinc-950/60 p-1.5 border border-white/5 rounded-full">
-          {[
-            { id: "desktop", icon: Monitor, label: "Escritorio" },
-            { id: "tablet", icon: Tablet, label: "Tablet" },
-            { id: "mobile", icon: Smartphone, label: "Móvil" },
-          ].map((mode) => {
+          {deviceModes.map((mode) => {
             const IconComp = mode.icon;
             const isActive = device === mode.id;
             return (
@@ -79,7 +85,7 @@ export default function IframeViewer({ url, title }: IframeViewerProps) {
                     ? "bg-cabuwebMedium text-white shadow-[0_0_15px_rgba(0,116,255,0.4)]"
                     : "text-zinc-500 hover:text-zinc-300"
                 }`}
-                aria-label={`Vista de ${mode.label}`}
+                aria-label={mode.label}
               >
                 <IconComp className="w-4 h-4" />
                 <span className="hidden xs:inline">{mode.label}</span>
@@ -93,18 +99,18 @@ export default function IframeViewer({ url, title }: IframeViewerProps) {
           <button
             onClick={handleRefresh}
             className="p-2.5 bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/15 text-zinc-400 hover:text-white rounded-xl transition-all"
-            title="Refrescar demostración"
+            title={t.refresh}
           >
             <RotateCw className="w-4 h-4" />
           </button>
-          
+
           <a
             href={url}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/15 text-zinc-300 hover:text-white rounded-xl text-xs font-helveticaBold uppercase tracking-wider transition-all"
           >
-            <span className="hidden xs:inline">Abrir en Nueva Pestaña</span>
+            <span className="hidden xs:inline">{t.openTab}</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>
@@ -117,7 +123,7 @@ export default function IframeViewer({ url, title }: IframeViewerProps) {
           <div className="absolute inset-0 flex flex-col justify-center items-center bg-zinc-950 z-20 gap-4">
             <div className="w-10 h-10 border-4 border-cabuwebMedium border-t-transparent rounded-full animate-spin"></div>
             <p className="font-lemonLight text-xs text-zinc-500 tracking-widest uppercase">
-              Cargando Vista Previa...
+              {t.loading}
             </p>
           </div>
         )}
@@ -130,7 +136,7 @@ export default function IframeViewer({ url, title }: IframeViewerProps) {
             key={iframeKey}
             ref={iframeRef}
             src={url}
-            title={`Demo en vivo de ${title}`}
+            title={`Demo — ${title}`}
             className="w-full h-full border-0 rounded-lg"
             onLoad={() => setIsLoading(false)}
             loading="lazy"
@@ -142,9 +148,7 @@ export default function IframeViewer({ url, title }: IframeViewerProps) {
       {/* Security/Notice alert */}
       <div className="mt-3 flex items-start gap-2.5 text-zinc-500 text-xs px-2 leading-relaxed">
         <ShieldAlert className="w-4 h-4 text-zinc-600 shrink-0 mt-0.5" />
-        <p>
-          Nota: Algunas funciones externas o integraciones avanzadas de la demo interactiva pueden requerir abrir la demo en una nueva pestaña para su correcto funcionamiento.
-        </p>
+        <p>{t.notice}</p>
       </div>
     </div>
   );

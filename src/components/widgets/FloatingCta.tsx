@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useStore } from "@/store/useStore";
+import { translations } from "@/constants/translations";
 
 type FloatingCtaProps = {
   projectName: string;
@@ -9,6 +11,8 @@ type FloatingCtaProps = {
 export default function FloatingCta({ projectName }: FloatingCtaProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [shouldBounce, setShouldBounce] = useState(false);
+  const lang = useStore((state) => state.lang);
+  const t = translations[lang].floatingCta;
 
   useEffect(() => {
     // Show after 1.2 seconds of page load
@@ -41,17 +45,16 @@ export default function FloatingCta({ projectName }: FloatingCtaProps) {
           animation: subtle-bounce 0.8s ease-in-out;
         }
       `}</style>
-      
+
       <div
-        className={`bg-zinc-950/90 backdrop-blur-xl border border-white/10 px-4 py-2.5 rounded-2xl flex items-center justify-between gap-6 shadow-[0_20px_45px_rgba(0,0,0,0.7)] transition-all duration-500 transform ${
-          isVisible
+        className={`bg-zinc-950/90 backdrop-blur-xl border border-white/10 px-4 py-2.5 rounded-2xl flex items-center justify-between gap-6 shadow-[0_20px_45px_rgba(0,0,0,0.7)] transition-all duration-500 transform ${isVisible
             ? "translate-y-0 opacity-100 scale-100"
             : "translate-y-10 opacity-0 scale-95 pointer-events-none"
-        } ${shouldBounce ? "animate-subtle-bounce" : ""}`}
+          } ${shouldBounce ? "animate-subtle-bounce" : ""}`}
       >
         <div className="flex flex-col gap-0.5 min-w-0 pr-2">
           <span className="text-[9px] text-zinc-500 font-lemonLight uppercase tracking-widest block">
-            Caso de Éxito
+            {t.tag}
           </span>
           <span className="text-xs text-white font-lemonBold truncate max-w-[130px] sm:max-w-[180px] block">
             {projectName}
@@ -62,7 +65,7 @@ export default function FloatingCta({ projectName }: FloatingCtaProps) {
           href="#footer"
           className="px-4 py-2 bg-white hover:bg-zinc-200 text-zinc-950 rounded-xl font-lemonLight text-[9px] tracking-wider uppercase transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:scale-[1.03] active:scale-[0.97] shrink-0"
         >
-          Cotizar Similar
+          {t.btn}
         </a>
       </div>
     </div>

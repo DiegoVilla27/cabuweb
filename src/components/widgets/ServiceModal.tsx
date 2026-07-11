@@ -4,27 +4,23 @@ import { useStore } from "@/store/useStore";
 import { X, CheckCircle2, ArrowRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { translations } from "@/constants/translations";
 
 export default function ServiceModal() {
-  const { activeModal, closeModal } = useStore();
+  const { activeModal, closeModal, lang } = useStore();
 
   if (!activeModal) return null;
+
+  const t = translations[lang].modal;
 
   const getModalContent = () => {
     switch (activeModal) {
       case "web":
         return {
-          titleOne: "Desarrollo",
-          titleTwo: "Web Élite",
-          description:
-            "Diseñamos infraestructuras web inmersivas de altísimo rendimiento. No construimos simples páginas, creamos experiencias interactivas que cautivan a tu audiencia y convierten visitantes en clientes leales.",
-          features: [
-            "Arquitectura escalable de alto rendimiento",
-            "Diseño UI/UX de vanguardia (Dark Luxury)",
-            "Optimización SEO avanzada y Core Web Vitals",
-            "E-commerce transaccional de alta conversión",
-            "Integración de CMS Headless y APIs personalizadas",
-          ],
+          titleOne: lang === "es" ? "Desarrollo" : "Web",
+          titleTwo: lang === "es" ? "Web Élite" : "Development",
+          description: t.web.intro,
+          features: t.web.features,
           tech: [
             { name: "React", icon: "https://cdn.simpleicons.org/react/61DAFB" },
             { name: "Next.js", icon: "https://cdn.simpleicons.org/nextdotjs/white" },
@@ -33,17 +29,10 @@ export default function ServiceModal() {
         };
       case "app":
         return {
-          titleOne: "Aplicaciones",
-          titleTwo: "Híbridas",
-          description:
-            "Lleva el poder de tu empresa a los bolsillos de tus clientes. Desarrollamos aplicaciones móviles multiplataforma optimizando tiempos y costos sin sacrificar una experiencia de usuario adictiva.",
-          features: [
-            "Desarrollo ágil multiplataforma (iOS y Android)",
-            "Arquitecturas Offline-first y sincronización en tiempo real",
-            "Sistemas de notificaciones push inteligentes",
-            "Integración de pasarelas de pago y hardware del dispositivo",
-            "Publicación y optimización en App Store y Google Play",
-          ],
+          titleOne: lang === "es" ? "Aplicaciones" : "Hybrid",
+          titleTwo: lang === "es" ? "Híbridas" : "Mobile Apps",
+          description: t.app.intro,
+          features: t.app.features,
           tech: [
             { name: "React Native", icon: "https://cdn.simpleicons.org/react/61DAFB" },
             { name: "Ionic", icon: "https://cdn.simpleicons.org/ionic/3880FF" },
@@ -52,17 +41,10 @@ export default function ServiceModal() {
         };
       case "software":
         return {
-          titleOne: "Software",
-          titleTwo: "a la Medida",
-          description:
-            "Digitalizamos y automatizamos las operaciones más complejas de tu negocio. Construimos sistemas a medida, seguros y escalables que reducen costos operativos y preparan a tu empresa para el futuro.",
-          features: [
-            "Sistemas ERP y CRM personalizados",
-            "Automatización de flujos de trabajo (Workflows)",
-            "Arquitecturas Serverless y Cloud Computing",
-            "Paneles de administración y visualización de datos en tiempo real",
-            "Máxima seguridad y encriptación de extremo a extremo",
-          ],
+          titleOne: lang === "es" ? "Software" : "Custom",
+          titleTwo: lang === "es" ? "a la Medida" : "Software",
+          description: t.software.intro,
+          features: t.software.features,
           tech: [
             { name: "React", icon: "https://cdn.simpleicons.org/react/61DAFB" },
             { name: "Next.js", icon: "https://cdn.simpleicons.org/nextdotjs/white" },
@@ -79,6 +61,10 @@ export default function ServiceModal() {
   };
 
   const content = getModalContent();
+
+  const txtIncluded = lang === "es" ? "¿Qué incluimos?" : "What's included?";
+  const txtStack = lang === "es" ? "Tecnologías Base" : "Base Technologies";
+  const txtQuote = lang === "es" ? "Cotizar Ahora" : "Quote Now";
 
   return (
     <AnimatePresence>
@@ -118,7 +104,7 @@ export default function ServiceModal() {
             </p>
 
             <div className="mt-8">
-              <p className="font-lemonBold text-xs text-zinc-300 uppercase tracking-widest mb-4">¿Qué incluimos?</p>
+              <p className="font-lemonBold text-xs text-zinc-300 uppercase tracking-widest mb-4">{txtIncluded}</p>
               <ul className="flex flex-col gap-3">
                 {content?.features.map((feature, index) => (
                   <li key={index} className="flex items-start gap-3">
@@ -133,7 +119,7 @@ export default function ServiceModal() {
           {/* Right Column (Sidebar/CTA) */}
           <div className="w-full md:w-[320px] bg-zinc-900/50 border-t md:border-t-0 md:border-l border-white/5 p-8 md:p-12 relative z-10 flex flex-col justify-between">
             <div>
-              <p className="font-lemonBold text-xs text-zinc-300 uppercase tracking-widest mb-4">Tecnologías Base</p>
+              <p className="font-lemonBold text-xs text-zinc-300 uppercase tracking-widest mb-4">{txtStack}</p>
               <div className="flex flex-wrap gap-2">
                 {content?.tech.map((techItem, index) => (
                   <span key={index} className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/5 border border-white/10 text-xs font-helveticaRoman text-zinc-400 hover:bg-white/10 transition-colors">
@@ -148,7 +134,7 @@ export default function ServiceModal() {
               <Link href="#footer" onClick={closeModal} className="group relative w-full flex items-center justify-center">
                 <div className="absolute inset-0 bg-cabuwebMedium/20 rounded-xl blur-md group-hover:bg-cabuwebMedium/40 transition-colors duration-500" />
                 <button className="relative w-full font-helveticaBold text-sm uppercase tracking-widest bg-zinc-800 border border-white/10 text-white px-6 py-4 rounded-xl hover:border-cabuwebMedium transition-all duration-500 flex items-center justify-center gap-3 shadow-lg">
-                  <span className="relative z-10">Cotizar Ahora</span>
+                  <span className="relative z-10">{txtQuote}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform relative z-10" />
                 </button>
               </Link>

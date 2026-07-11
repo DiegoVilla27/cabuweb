@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
@@ -7,20 +6,22 @@ import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { NAVIGATION_LINKS } from "@/constants/data";
+import { translations } from "@/constants/translations";
 
 export default function Sidenav() {
-  const { isSidenavOpen, toggleSidenav } = useStore();
+  const { isSidenavOpen, toggleSidenav, lang, setLang } = useStore();
   const pathname = usePathname();
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    if (pathname === "/") {
-      e.preventDefault();
+    if (pathname === "/" || pathname === "/desarrollo-apps" || pathname === "/gracias") {
       if (id === "home") {
+        e.preventDefault();
         window.scrollTo({ top: 0, behavior: "smooth" });
         window.history.pushState(null, "", "/");
       } else {
         const element = document.getElementById(id);
         if (element) {
+          e.preventDefault();
           element.scrollIntoView({ behavior: "smooth" });
           window.history.pushState(null, "", `/#${id}`);
         }
@@ -28,6 +29,8 @@ export default function Sidenav() {
     }
     toggleSidenav();
   };
+
+  const txtFollow = lang === "es" ? "Síguenos en redes" : "Follow us";
 
   return (
     <AnimatePresence>
@@ -68,31 +71,57 @@ export default function Sidenav() {
             {/* Navigation Links */}
             <div className="flex-1 flex flex-col justify-center">
               <ul className="flex flex-col gap-8">
-                {NAVIGATION_LINKS.filter(item => item.id !== "home").map((item, i) => (
-                  <motion.li
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + i * 0.1 }}
-                    key={item.id}
-                  >
-                    <Link
-                      href={`/#${item.id}`}
-                      onClick={(e) => handleNavClick(e, item.id)}
-                      className="group flex flex-col items-start text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                {NAVIGATION_LINKS.filter(item => item.id !== "home").map((item, i) => {
+                  const navKey = item.id as keyof typeof translations.es.nav;
+                  const label = translations[lang].nav[navKey] || item.label;
+                  return (
+                    <motion.li
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + i * 0.1 }}
+                      key={item.id}
                     >
-                      <span className="font-lemonLight text-3xl md:text-4xl capitalize tracking-wide drop-shadow-md">
-                        {item.label}
-                      </span>
-                      <span className="h-[2px] w-0 bg-cabuwebMedium mt-2 group-hover:w-16 transition-all duration-500 ease-out"></span>
-                    </Link>
-                  </motion.li>
-                ))}
+                      <Link
+                        href={`/#${item.id}`}
+                        onClick={(e) => handleNavClick(e, item.id)}
+                        className="group flex flex-col items-start text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                      >
+                        <span className="font-lemonLight text-3xl md:text-4xl capitalize tracking-wide drop-shadow-md">
+                          {label}
+                        </span>
+                        <span className="h-[2px] w-0 bg-cabuwebMedium mt-2 group-hover:w-16 transition-all duration-500 ease-out"></span>
+                      </Link>
+                    </motion.li>
+                  );
+                })}
+
+                {/* Mobile Sidenav Language Switcher */}
+                <motion.li
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + NAVIGATION_LINKS.length * 0.1 }}
+                  className="flex items-center gap-3 text-sm font-helveticaBold select-none mt-4 pt-4 border-t border-white/5"
+                >
+                  <button
+                    onClick={() => { setLang("es"); toggleSidenav(); }}
+                    className={`hover:text-white transition-colors cursor-pointer ${lang === 'es' ? 'text-white' : 'text-zinc-500'}`}
+                  >
+                    ESPAÑOL (ES)
+                  </button>
+                  <span className="text-zinc-700">|</span>
+                  <button
+                    onClick={() => { setLang("en"); toggleSidenav(); }}
+                    className={`hover:text-white transition-colors cursor-pointer ${lang === 'en' ? 'text-white' : 'text-zinc-500'}`}
+                  >
+                    ENGLISH (EN)
+                  </button>
+                </motion.li>
               </ul>
             </div>
 
             {/* Footer / Socials */}
             <div className="mt-12 border-t border-white/10 pt-8">
-              <p className="text-zinc-500 font-helveticaRoman text-xs uppercase tracking-widest mb-6">Síguenos en redes</p>
+              <p className="text-zinc-500 font-helveticaRoman text-xs uppercase tracking-widest mb-6">{txtFollow}</p>
               <div className="flex gap-4">
                 <a
                   href="https://www.facebook.com/cabuweb"
@@ -118,17 +147,6 @@ export default function Sidenav() {
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                   </svg>
                 </a>
-                {/* <a
-                  href="https://www.twitter.com/cabuweb"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-400 hover:bg-cabuwebMedium/20 hover:border-cabuwebMedium/50 hover:text-white transition-all cursor-pointer"
-                  aria-label="Twitter"
-                >
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-                  </svg>
-                </a> */}
               </div>
             </div>
           </motion.aside>

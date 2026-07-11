@@ -4,9 +4,13 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight } from "lucide-react";
+import { useStore } from "@/store/useStore";
+import { translations } from "@/constants/translations";
 
 export default function ThankYouPage() {
-  // Opcional: Hacer scroll al top cuando aterrice por si la navegación conservó el scroll
+  const lang = useStore((state) => state.lang);
+  const t = translations[lang].thanksPage;
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -35,19 +39,27 @@ export default function ThankYouPage() {
         </motion.div>
 
         <h1 className="font-lemonLight text-3xl md:text-5xl text-zinc-100 tracking-wide mb-4">
-          ¡Tu Visión Está En <span className="font-lemonBold text-transparent bg-clip-text bg-linear-to-r from-cabuwebMedium to-blue-400">Marcha!</span>
+          {lang === "es" ? (
+            <>
+              ¡Tu Visión Está En <span className="font-lemonBold text-transparent bg-clip-text bg-linear-to-r from-cabuwebMedium to-blue-400">Marcha!</span>
+            </>
+          ) : (
+            <>
+              Your Vision Is In <span className="font-lemonBold text-transparent bg-clip-text bg-linear-to-r from-cabuwebMedium to-blue-400">Motion!</span>
+            </>
+          )}
         </h1>
 
         <p className="font-helveticaRoman text-base md:text-lg text-zinc-400 leading-relaxed mb-10 max-w-lg mx-auto">
-          Hemos recibido tu solicitud de contacto correctamente. Uno de nuestros arquitectos de software de élite revisará tus requerimientos y se pondrá en contacto contigo muy pronto.
+          {t.desc}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link href="/" className="w-full sm:w-auto bg-white text-zinc-950 hover:bg-zinc-200 px-8 py-4 rounded-xl font-helveticaBold text-sm tracking-widest uppercase transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] inline-flex items-center justify-center gap-2">
-            Volver al Inicio
+            {t.btnHome}
           </Link>
           <a href="https://www.instagram.com/cabuweb" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white border border-white/10 px-8 py-4 rounded-xl font-helveticaBold text-sm tracking-widest uppercase transition-all inline-flex items-center justify-center gap-2 group">
-            Ver Casos en Instagram <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            {t.btnSocial} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
       </motion.div>
@@ -61,12 +73,12 @@ export default function ThankYouPage() {
       >
         <div className="flex items-center gap-2 text-zinc-400 font-helveticaMedium text-xs uppercase tracking-widest">
           <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-          Respuesta en 24h
+          {t.badgeResponse}
         </div>
         <div className="w-1 h-1 rounded-full bg-zinc-700"></div>
         <div className="flex items-center gap-2 text-zinc-400 font-helveticaMedium text-xs uppercase tracking-widest">
           <span className="w-2 h-2 rounded-full bg-blue-500"></span>
-          Confidencialidad 100%
+          {t.badgeConfidential}
         </div>
       </motion.div>
     </div>

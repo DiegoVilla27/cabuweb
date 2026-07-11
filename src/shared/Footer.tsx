@@ -12,49 +12,58 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { submitContactForm } from "@/app/actions/contact";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
+import { useStore } from "@/store/useStore";
+import { translations } from "@/constants/translations";
 
 // Form validation schema
-const contactSchema = z.object({
-  name: z
-    .string()
-    .min(1, "El nombre es requerido.")
-    .max(40, "El nombre es demasiado largo (máximo 40 caracteres).")
-    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ][a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/, "El nombre solo debe contener letras."),
-  email: z
-    .string()
-    .min(1, "El correo electrónico es requerido.")
-    .email("El correo electrónico es inválido.")
-    .max(40, "El correo es demasiado largo (máximo 40 caracteres)."),
-  company: z
-    .string()
-    .max(50, "El nombre de la empresa es demasiado largo (máximo 50 caracteres).")
-    .optional()
-    .or(z.literal("")),
-  phone: z
-    .string()
-    .min(6, "El número de teléfono es requerido y debe ser válido."),
-  budget: z
-    .string()
-    .min(1, "El presupuesto es requerido."),
-  business_type: z
-    .string()
-    .min(1, "El tipo de negocio es requerido."),
-  type: z.enum(["web", "app", "software"]),
-  message: z
-    .string()
-    .min(1, "El mensaje es requerido.")
-    .max(200, "El mensaje es demasiado largo (máximo 200 caracteres)."),
-  check: z.boolean().refine((val) => val === true, {
-    message: "Debes aceptar nuestras políticas de privacidad para continuar.",
-  }),
-});
+const getContactSchema = (lang: "es" | "en") => {
+  const t = translations[lang].footer.form.validation;
+  return z.object({
+    name: z
+      .string()
+      .min(3, t.name)
+      .max(40, lang === "es" ? "El nombre es demasiado largo." : "Name is too long.")
+      .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ][a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/, lang === "es" ? "El nombre solo debe contener letras." : "Name must only contain letters."),
+    email: z
+      .string()
+      .min(1, t.email)
+      .email(t.email)
+      .max(40, lang === "es" ? "El correo electrónico es demasiado largo." : "Email is too long."),
+    company: z
+      .string()
+      .max(50, lang === "es" ? "El nombre de la empresa es demasiado largo." : "Company name is too long.")
+      .optional()
+      .or(z.literal("")),
+    phone: z
+      .string()
+      .min(6, t.phone),
+    budget: z
+      .string()
+      .min(1, t.budget),
+    business_type: z
+      .string()
+      .min(1, t.businessType),
+    type: z.enum(["web", "app", "software"]),
+    message: z
+      .string()
+      .min(10, t.message)
+      .max(200, lang === "es" ? "El mensaje es demasiado largo (máximo 200 caracteres)." : "Message is too long (maximum 200 characters)."),
+    check: z.boolean().refine((val) => val === true, {
+      message: lang === "es"
+        ? "Debes aceptar nuestras políticas de privacidad para continuar."
+        : "You must accept our privacy policies to continue.",
+    }),
+  });
+};
 
-type ContactFormData = z.infer<typeof contactSchema>;
+type ContactFormData = z.infer<ReturnType<typeof getContactSchema>>;
 
 function FooterContent() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
+  const lang = useStore((state) => state.lang);
+  const t = translations[lang].footer;
 
   const {
     register,
@@ -63,7 +72,7 @@ function FooterContent() {
     control,
     formState: { errors },
   } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(getContactSchema(lang)),
     defaultValues: {
       name: "",
       email: "",
@@ -79,31 +88,40 @@ function FooterContent() {
 
   const onSubmit = async (data: ContactFormData) => {
     if (!executeRecaptcha) {
-      toast.error("Sistema de seguridad iniciando.", { description: "Por favor, espera un segundo e intenta de nuevo." });
+      toast.error(
+        lang === "es" ? "Sistema de seguridad iniciando." : "Security system initializing.",
+        {
+          description: lang === "es"
+            ? "Por favor, espera un segundo e intenta de nuevo."
+            : "Please wait a second and try again."
+        }
+      );
       return;
     }
 
     setLoading(true);
-    const toastId = toast.loading("Enviando mensaje...");
+    const toastId = toast.loading(lang === "es" ? "Enviando mensaje..." : "Sending message...");
 
     try {
-      const typeLabel = data.type === "web" ? "Página Web" : data.type === "app" ? "Aplicación Móvil" : "Software a la medida";
+      const typeLabel = data.type === "web"
+        ? (lang === "es" ? "Página Web" : "Website")
+        : data.type === "app"
+          ? (lang === "es" ? "Aplicación Móvil" : "Mobile App")
+          : (lang === "es" ? "Software a la medida" : "Custom Software");
 
       const budgetLabelMap: Record<string, string> = {
-        less_2k: "Menos de $2,000 USD",
-        "2k_5k": "$2,000 USD - $5,000 USD",
-        "5k_10k": "$5,000 USD - $10,000 USD",
-        "10k_25k": "$10,000 USD - $25,000 USD",
-        more_25k: "Más de $25,000 USD",
+        low: t.form.budgets.low,
+        medium: t.form.budgets.medium,
+        high: t.form.budgets.high,
+        enterprise: t.form.budgets.enterprise,
       };
 
       const businessTypeLabelMap: Record<string, string> = {
-        ecommerce: "E-commerce / Tienda Online",
-        saas: "SaaS / Startup / Prod. Digital",
-        corporative: "Web Corporativo / Landing",
-        mobile: "App Móvil (iOS & Android)",
-        custom: "Software a la Medida / ERP",
-        other: "Otro",
+        ecommerce: t.form.businessTypes.ecommerce,
+        saas: t.form.businessTypes.saas,
+        corporate: t.form.businessTypes.corporate,
+        local: t.form.businessTypes.local,
+        other: t.form.businessTypes.other,
       };
 
       // 1. Obtener Token de reCAPTCHA v3
@@ -114,7 +132,7 @@ function FooterContent() {
         {
           name: data.name,
           email: data.email,
-          company: data.company,
+          company: data.company || "",
           phone: data.phone,
           budget: budgetLabelMap[data.budget] || data.budget,
           business_type: businessTypeLabelMap[data.business_type] || data.business_type,
@@ -124,15 +142,16 @@ function FooterContent() {
         token
       );
 
-      toast.success("¡Mensaje enviado satisfactoriamente!", {
+      toast.success(t.form.successTitle, {
         id: toastId,
+        description: t.form.successText,
       });
       reset();
       router.push("/gracias");
     } catch (error: any) {
-      toast.error("No se pudo enviar el mensaje.", {
+      toast.error(t.form.errorTitle, {
         id: toastId,
-        description: error.message || "Inténtalo de nuevo más tarde.",
+        description: error.message || t.form.errorText,
       });
     } finally {
       setLoading(false);
@@ -156,10 +175,21 @@ function FooterContent() {
                 </figure>
               </Link>
               <p className="font-helveticaRoman text-zinc-400 mt-8 text-sm md:text-base leading-relaxed">
-                Somos una <strong className="text-zinc-200">agencia boutique de software</strong> dedicada al diseño de élite, desarrollo e implementación de ecosistemas digitales que transforman industrias.
-                <br />
-                <br />
-                Nacimos con la misión de proveer <strong className="text-zinc-200">soluciones tecnológicas de alta gama</strong> para empresas que buscan liderar su mercado.
+                {lang === "es" ? (
+                  <>
+                    Somos una <strong className="text-zinc-200">agencia boutique de software</strong> dedicada al diseño de élite, desarrollo e implementación de ecosistemas digitales que transforman industrias.
+                    <br />
+                    <br />
+                    Nacimos con la misión de proveer <strong className="text-zinc-200">soluciones tecnológicas de alta gama</strong> para empresas que buscan liderar su mercado.
+                  </>
+                ) : (
+                  <>
+                    We are a <strong className="text-zinc-200">boutique software agency</strong> dedicated to elite design, development, and deployment of digital ecosystems that transform industries.
+                    <br />
+                    <br />
+                    We were born with the mission of providing <strong className="text-zinc-200">high-end tech solutions</strong> for businesses looking to lead their market.
+                  </>
+                )}
               </p>
             </div>
           </div>
@@ -168,7 +198,7 @@ function FooterContent() {
           <div className="col-span-12 lg:col-span-3 lg:mt-8">
             <div className="px-4">
               <h4 className="uppercase font-helveticaBold text-sm md:text-base text-zinc-200 tracking-widest">
-                Conectar
+                {lang === "es" ? "Conectar" : "Connect"}
               </h4>
               <hr className="mt-4 mb-8 w-1/5 border-zinc-800" />
               <div className="flex flex-col gap-5 text-zinc-400 font-helveticaRoman text-sm">
@@ -204,10 +234,18 @@ function FooterContent() {
           <div className="col-span-12 lg:col-span-6 mt-12 lg:mt-0 z-20 relative">
             <div className="bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-4xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
               <h3 className="font-lemonLight text-2xl md:text-3xl text-zinc-100 tracking-wide">
-                Escalemos tu <br /><span className="font-lemonBold text-white">Empresa</span>
+                {lang === "es" ? (
+                  <>
+                    Escalemos tu <br /><span className="font-lemonBold text-white">Empresa</span>
+                  </>
+                ) : (
+                  <>
+                    Let's Scale Your <br /><span className="font-lemonBold text-white">Business</span>
+                  </>
+                )}
               </h3>
               <p className="font-helveticaRoman text-sm md:text-base text-zinc-400 mt-4 leading-relaxed mb-8">
-                Estás a un mensaje de distancia de transformar tu negocio. Cuéntanos sobre tu visión y nuestro equipo de arquitectos digitales se pondrá en contacto hoy mismo.
+                {t.subtitle}
               </p>
 
               <form onSubmit={handleSubmit(onSubmit)} className="mt-8 flex flex-col gap-5">
@@ -217,7 +255,7 @@ function FooterContent() {
                     <input
                       type="text"
                       className={`w-full bg-zinc-950/50 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-cabuwebMedium focus:bg-white/5 transition-all ${errors.name ? "border-red-500/50 focus:border-red-500" : ""}`}
-                      placeholder="Nombre completo"
+                      placeholder={t.form.name}
                       {...register("name")}
                     />
                   </div>
@@ -225,7 +263,7 @@ function FooterContent() {
                     <input
                       type="email"
                       className={`w-full bg-zinc-950/50 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-cabuwebMedium focus:bg-white/5 transition-all ${errors.email ? "border-red-500/50 focus:border-red-500" : ""}`}
-                      placeholder="Correo electrónico"
+                      placeholder={t.form.email}
                       {...register("email")}
                     />
                   </div>
@@ -245,7 +283,7 @@ function FooterContent() {
                     <input
                       type="text"
                       className={`w-full bg-zinc-950/50 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-cabuwebMedium focus:bg-white/5 transition-all ${errors.company ? "border-red-500/50 focus:border-red-500" : ""}`}
-                      placeholder="Empresa (Opcional)"
+                      placeholder={t.form.company}
                       {...register("company")}
                     />
                   </div>
@@ -259,8 +297,8 @@ function FooterContent() {
                           value={field.value}
                           onChange={field.onChange}
                           className={`w-full bg-zinc-950/50 border rounded-xl flex items-center transition-all ${errors.phone
-                              ? "border-red-500/50 focus-within:border-red-500"
-                              : "border-white/10 focus-within:border-cabuwebMedium focus-within:bg-white/5"
+                            ? "border-red-500/50 focus-within:border-red-500"
+                            : "border-white/10 focus-within:border-cabuwebMedium focus-within:bg-white/5"
                             }`}
                           style={{
                             height: "50px",
@@ -311,13 +349,12 @@ function FooterContent() {
                       className={`w-full bg-zinc-950/50 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-zinc-400 focus:outline-none focus:border-cabuwebMedium focus:text-zinc-200 focus:bg-white/5 transition-all cursor-pointer appearance-none ${errors.business_type ? "border-red-500/50 focus:border-red-500" : ""}`}
                       {...register("business_type")}
                     >
-                      <option value="" className="bg-zinc-900 text-zinc-500">Tipo de negocio</option>
-                      <option value="ecommerce" className="bg-zinc-900 text-zinc-200">E-commerce / Tienda Online</option>
-                      <option value="saas" className="bg-zinc-900 text-zinc-200">SaaS / Startup / Prod. Digital</option>
-                      <option value="corporative" className="bg-zinc-900 text-zinc-200">Web Corporativo / Landing</option>
-                      <option value="mobile" className="bg-zinc-900 text-zinc-200">App Móvil (iOS & Android)</option>
-                      <option value="custom" className="bg-zinc-900 text-zinc-200">Software a la Medida / ERP</option>
-                      <option value="other" className="bg-zinc-900 text-zinc-200">Otro</option>
+                      <option value="" className="bg-zinc-900 text-zinc-500">{t.form.businessTypePlaceholder}</option>
+                      <option value="ecommerce" className="bg-zinc-900 text-zinc-200">{t.form.businessTypes.ecommerce}</option>
+                      <option value="saas" className="bg-zinc-900 text-zinc-200">{t.form.businessTypes.saas}</option>
+                      <option value="corporate" className="bg-zinc-900 text-zinc-200">{t.form.businessTypes.corporate}</option>
+                      <option value="local" className="bg-zinc-900 text-zinc-200">{t.form.businessTypes.local}</option>
+                      <option value="other" className="bg-zinc-900 text-zinc-200">{t.form.businessTypes.other}</option>
                     </select>
                   </div>
                   <div className="col-span-2 sm:col-span-1 flex flex-col relative group">
@@ -325,12 +362,11 @@ function FooterContent() {
                       className={`w-full bg-zinc-950/50 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-zinc-400 focus:outline-none focus:border-cabuwebMedium focus:text-zinc-200 focus:bg-white/5 transition-all cursor-pointer appearance-none ${errors.budget ? "border-red-500/50 focus:border-red-500" : ""}`}
                       {...register("budget")}
                     >
-                      <option value="" className="bg-zinc-900 text-zinc-500">Presupuesto estimado (USD)</option>
-                      <option value="less_2k" className="bg-zinc-900 text-zinc-200">Menos de $2,000 USD</option>
-                      <option value="2k_5k" className="bg-zinc-900 text-zinc-200">$2,000 USD - $5,000 USD</option>
-                      <option value="5k_10k" className="bg-zinc-900 text-zinc-200">$5,000 USD - $10,000 USD</option>
-                      <option value="10k_25k" className="bg-zinc-900 text-zinc-200">$10,000 USD - $25,000 USD</option>
-                      <option value="more_25k" className="bg-zinc-900 text-zinc-200">Más de $25,000 USD</option>
+                      <option value="" className="bg-zinc-900 text-zinc-500">{t.form.budgetPlaceholder}</option>
+                      <option value="low" className="bg-zinc-900 text-zinc-200">{t.form.budgets.low}</option>
+                      <option value="medium" className="bg-zinc-900 text-zinc-200">{t.form.budgets.medium}</option>
+                      <option value="high" className="bg-zinc-900 text-zinc-200">{t.form.budgets.high}</option>
+                      <option value="enterprise" className="bg-zinc-900 text-zinc-200">{t.form.budgets.enterprise}</option>
                     </select>
                   </div>
                 </div>
@@ -349,9 +385,9 @@ function FooterContent() {
                     className="w-full bg-zinc-950/50 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-zinc-400 focus:outline-none focus:border-cabuwebMedium focus:text-zinc-200 focus:bg-white/5 transition-all cursor-pointer appearance-none"
                     {...register("type")}
                   >
-                    <option value="web" className="bg-zinc-900 text-zinc-200">Servicio: Página Web</option>
-                    <option value="app" className="bg-zinc-900 text-zinc-200">Servicio: Aplicación Móvil</option>
-                    <option value="software" className="bg-zinc-900 text-zinc-200">Servicio: Software a la medida</option>
+                    <option value="web" className="bg-zinc-900 text-zinc-200">{t.form.servicesList.web}</option>
+                    <option value="app" className="bg-zinc-900 text-zinc-200">{t.form.servicesList.app}</option>
+                    <option value="software" className="bg-zinc-900 text-zinc-200">{t.form.servicesList.software}</option>
                   </select>
                 </div>
 
@@ -360,7 +396,7 @@ function FooterContent() {
                   <textarea
                     rows={4}
                     className={`w-full bg-zinc-950/50 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-cabuwebMedium focus:bg-white/5 transition-all resize-none ${errors.message ? "border-red-500/50 focus:border-red-500" : ""}`}
-                    placeholder="Cuéntanos sobre tu visión..."
+                    placeholder={t.form.messagePlaceholder}
                     {...register("message")}
                   ></textarea>
                   {errors.message && (
@@ -380,13 +416,13 @@ function FooterContent() {
                       {...register("check")}
                     />
                     <label className="font-helveticaRoman text-xs pl-3 text-zinc-400 select-none cursor-pointer" htmlFor="checkPolitics">
-                      Acepto las&nbsp;
+                      {lang === "es" ? "Acepto las" : "I accept the"}&nbsp;
                       <Link href="/politica-de-privacidad" className="font-helveticaMedium text-zinc-300 hover:text-white transition-colors" target="_blank">
-                        Políticas de privacidad
+                        {lang === "es" ? "Políticas de privacidad" : "Privacy policies"}
                       </Link>
-                      &nbsp;y&nbsp;
+                      &nbsp;{lang === "es" ? "y" : "and"}&nbsp;
                       <Link href="/terminos-y-condiciones" className="font-helveticaMedium text-zinc-300 hover:text-white transition-colors" target="_blank">
-                        Términos y condiciones
+                        {lang === "es" ? "Términos y condiciones" : "Terms and conditions"}
                       </Link>
                     </label>
                   </div>
@@ -407,24 +443,24 @@ function FooterContent() {
                     {loading ? (
                       <>
                         <Loader2 className="w-5 h-5 animate-spin" />
-                        <span>Procesando...</span>
+                        <span>{t.form.submitting}</span>
                       </>
                     ) : (
-                      <span>Enviar Solicitud</span>
+                      <span>{t.form.submit}</span>
                     )}
                   </button>
                 </div>
 
                 <p className="text-[10px] text-zinc-600 mt-2 text-center font-helveticaRoman">
-                  Este sitio está protegido por reCAPTCHA y aplican la{" "}
+                  {lang === "es" ? "Este sitio está protegido por reCAPTCHA y aplican la " : "This site is protected by reCAPTCHA and Google's "}
                   <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-                    Política de Privacidad
+                    {lang === "es" ? "Política de Privacidad" : "Privacy Policy"}
                   </a>{" "}
-                  y los{" "}
+                  {lang === "es" ? "y los " : "and "}
                   <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-                    Términos de Servicio
+                    {lang === "es" ? "Términos de Servicio" : "Terms of Service"}
                   </a>{" "}
-                  de Google.
+                  {lang === "es" ? "de Google." : "apply."}
                 </p>
               </form>
             </div>
@@ -435,7 +471,7 @@ function FooterContent() {
       {/* Bottom Copyright Bar */}
       <div className="w-full border-t border-white/5 bg-zinc-950 py-6">
         <p className="text-center font-helveticaRoman text-xs text-zinc-600">
-          © {new Date().getFullYear()} Cabuweb. Todos los derechos reservados.
+          © {new Date().getFullYear()} Cabuweb. {t.rights}
         </p>
       </div>
     </footer>

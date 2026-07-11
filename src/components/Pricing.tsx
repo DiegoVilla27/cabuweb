@@ -2,182 +2,165 @@
 
 import { motion } from "framer-motion";
 import { Check, Sparkles, Zap, ShoppingCart, Globe } from "lucide-react";
-
-interface PricingPlan {
-  name: string;
-  price: string;
-  description: string;
-  icon: React.ReactNode;
-  features: string[];
-  ctaText: string;
-  highlighted: boolean;
-  slug: string;
-}
-
-const plans: PricingPlan[] = [
-  {
-    slug: "landing",
-    name: "Landing Page",
-    price: "Desde $399 USD",
-    description: "Ideal para lanzamientos de productos, campañas de marketing y marcas personales.",
-    icon: <Globe className="w-5 h-5 text-zinc-400" />,
-    ctaText: "Cotizar Landing",
-    highlighted: false,
-    features: [
-      "Diseño UI/UX 100% Personalizado (Sin plantillas)",
-      "Una página de aterrizaje (secciones ilimitadas)",
-      "Formulario de contacto y Whatsapp integrados",
-      "Carga Ultra Rápida (<1.2s)",
-      "Hosting y Dominio gratis por 1 año",
-      "Soporte técnico garantizado por 3 meses"
-    ]
-  },
-  {
-    slug: "tienda-virtual",
-    name: "Tienda Virtual",
-    price: "Desde $899 USD",
-    description: "La solución perfecta para comercios que buscan vender online de forma rápida y profesional.",
-    icon: <ShoppingCart className="w-5 h-5 text-cabuwebMedium" />,
-    ctaText: "Cotizar Tienda",
-    highlighted: true,
-    features: [
-      "Catálogo autogestionable hasta 50 productos",
-      "Pasarela de pagos integrada (Stripe, PayPal, etc.)",
-      "Carrito de compras y Checkout optimizado",
-      "Panel de control para pedidos e inventario",
-      "Buscador predictivo y filtros de categorías",
-      "Soporte técnico garantizado por 6 meses"
-    ]
-  },
-  {
-    slug: "ecommerce-robusto",
-    name: "E-commerce Custom",
-    price: "Desde $1,699 USD",
-    description: "Para marcas consolidadas que requieren automatizaciones de negocio y máxima escala.",
-    icon: <Zap className="w-5 h-5 text-zinc-400" />,
-    ctaText: "Cotizar E-commerce",
-    highlighted: false,
-    features: [
-      "Productos, categorías e inventario ilimitados",
-      "Sincronización con ERP, CRM o punto de venta (POS)",
-      "Soporte multi-idioma",
-      "Sistema automatizado de cupones y membresías",
-      "SEO técnico avanzado y sección de blog",
-      "Soporte prioritario 24/7"
-    ]
-  }
-];
+import { useStore } from "@/store/useStore";
+import { translations } from "@/constants/translations";
 
 export default function Pricing() {
-  const handlePlanSelect = (planName: string) => {
+  const lang = useStore((state) => state.lang);
+  const t = translations[lang].pricing;
+
+  const plans = [
+    {
+      slug: "landing",
+      name: t.landing.name,
+      price: t.landing.price,
+      description: t.landing.desc,
+      icon: <Globe className="w-5 h-5 text-zinc-400" />,
+      ctaText: t.landing.cta,
+      highlighted: false,
+      features: t.landing.features,
+    },
+    {
+      slug: "tienda-virtual",
+      name: t.tienda.name,
+      price: t.tienda.price,
+      description: t.tienda.desc,
+      icon: <ShoppingCart className="w-5 h-5 text-cabuwebMedium" />,
+      ctaText: t.tienda.cta,
+      highlighted: true,
+      features: t.tienda.features,
+    },
+    {
+      slug: "ecommerce",
+      name: t.ecommerce.name,
+      price: t.ecommerce.price,
+      description: t.ecommerce.desc,
+      icon: <Zap className="w-5 h-5 text-zinc-400" />,
+      ctaText: t.ecommerce.cta,
+      highlighted: false,
+      features: t.ecommerce.features,
+    }
+  ];
+
+  const handleCtaClick = (planName: string) => {
     // Find the textarea in the footer
     const textarea = document.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
-    const select = document.querySelector('select[name="type"]') as HTMLSelectElement;
-
     if (textarea) {
-      textarea.value = `Hola, equipo de Cabuweb. Estoy interesado/a en cotizar el Plan ${planName}. Me gustaría recibir más información y asesoramiento personalizado.`;
+      // Professional pre-filled message based on selected package
+      textarea.value = lang === "es"
+        ? `Hola, equipo de Cabuweb. Estoy interesado/a en solicitar más información y cotizar el paquete de "${planName}".`
+        : `Hello, Cabuweb team. I am interested in requesting more information and quoting the "${planName}" package.`;
+      // Dispatch input event for react-hook-form to register the change
       textarea.dispatchEvent(new Event("input", { bubbles: true }));
+      // Smooth scroll to the form
+      document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
     }
-
-    if (select) {
-      if (planName.includes("Landing")) {
-        select.value = "web";
-      } else if (planName.includes("Tienda") || planName.includes("E-commerce")) {
-        select.value = "software";
-      }
-      select.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-
-    // Scroll to form in footer
-    document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <section className="py-24 relative overflow-hidden" id="pricing">
+    <section id="pricing" className="px-6 py-32 relative w-full overflow-hidden bg-zinc-950">
       {/* Background ambient glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-modal h-[600px] bg-cabuwebMedium/5 blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 w-modal h-[600px] bg-cabuwebMedium/5 blur-[150px] rounded-full pointer-events-none -translate-x-1/2" />
+      <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-sky-500/5 blur-[130px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
+      {/* Grid Pattern for differentiation */}
+      <div
+        className="absolute inset-0 opacity-[0.015] pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle, #ffffff 1px, transparent 1px)`,
+          backgroundSize: "32px 32px"
+        }}
+      />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-20">
           <span className="font-lemonLight text-cabuwebMedium text-xs md:text-sm uppercase tracking-widest block mb-3">
-            Planes y Precios
+            {t.titleOne}
           </span>
-          <h2 className="font-lemonLight text-3xl md:text-5xl text-white uppercase tracking-tight leading-none mb-4">
-            Nuestros <span className="font-lemonBold">Paquetes</span>
+          <h2 className="font-lemonLight text-3xl md:text-5xl text-white uppercase tracking-tight leading-none mb-6">
+            {lang === "es" ? (
+              <>
+                Elige tu plan de <span className="font-lemonBold">Desarrollo</span>
+              </>
+            ) : (
+              <>
+                Choose your <span className="font-lemonBold">Development</span> plan
+              </>
+            )}
           </h2>
-          <p className="font-helveticaRoman text-zinc-400 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
-            Soluciones de software de élite adaptadas al tamaño y los objetivos comerciales de tu empresa.
+          <p className="font-helveticaRoman text-zinc-400 text-sm md:text-base leading-relaxed">
+            {t.subtitle}
           </p>
         </div>
 
-        <div className="grid grid-cols-12 gap-8 lg:gap-6 items-stretch">
-          {plans.map((plan, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: idx * 0.15, ease: "easeOut" }}
-              className={`col-span-12 lg:col-span-4 flex flex-col relative rounded-3xl p-8 transition-all duration-500 group ${plan.highlighted
-                ? "bg-zinc-900/80 border border-cabuwebMedium/40 shadow-[0_15px_40px_rgba(0,116,255,0.15)] scale-100 lg:scale-[1.03] z-10"
-                : "bg-zinc-900/40 border border-white/5 shadow-xl hover:border-white/10"
+        {/* Pricing Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mt-12">
+          {plans.map((plan, index) => (
+            <div
+              key={plan.slug}
+              className={`relative flex flex-col justify-between bg-zinc-900/40 backdrop-blur-xl border rounded-3xl p-8 md:p-10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(0,116,255,0.15)] group ${plan.highlighted
+                ? "border-cabuwebMedium/50 shadow-[0_15px_40px_rgba(0,116,255,0.1)]"
+                : "border-white/5 hover:border-white/20"
                 }`}
             >
               {plan.highlighted && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-cabuwebMedium text-white font-lemonLight text-[9px] tracking-widest uppercase py-1 px-4 rounded-full flex items-center gap-1.5 shadow-md">
-                  <Sparkles className="w-3 h-3" />
-                  Más popular
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-cabuwebMedium text-white px-4 py-1.5 rounded-full text-xs font-helveticaBold tracking-wider uppercase flex items-center gap-1.5 shadow-[0_5px_15px_rgba(0,116,255,0.4)]">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  {t.popular}
                 </div>
               )}
 
-              <div className="flex items-center gap-3 mb-4">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${plan.highlighted
-                  ? "bg-cabuwebMedium/10 border-cabuwebMedium/20"
-                  : "bg-white/5 border-white/5"
-                  }`}>
-                  {plan.icon}
+              <div>
+                {/* Plan Header */}
+                <div className="flex justify-between items-center mb-6">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                    {plan.icon}
+                  </div>
+                  {/* <span className="font-lemonBold text-xs text-zinc-500 uppercase tracking-widest">
+                    {plan.slug.replace("-", " ")}
+                  </span> */}
                 </div>
-                <h3 className="font-lemonLight text-lg text-white uppercase tracking-wider">
+
+                <h3 className="font-lemonLight text-xl md:text-2xl text-white uppercase mb-2">
                   {plan.name}
                 </h3>
+                <p className="font-helveticaRoman text-zinc-400 text-xs md:text-sm leading-relaxed mb-6">
+                  {plan.description}
+                </p>
+
+                <div className="border-t border-white/5 pt-6 mb-8">
+                  <span className="font-lemonBold text-2xl md:text-3xl text-white block">
+                    {plan.price}
+                  </span>
+                </div>
+
+                {/* Plan Features */}
+                <ul className="space-y-4 mb-8">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:border-cabuwebMedium/50 transition-colors">
+                        <Check className="w-3 h-3 text-cabuwebMedium" />
+                      </div>
+                      <span className="font-helveticaRoman text-zinc-300 text-xs md:text-sm leading-tight">
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              <div className="mb-4">
-                <span className="text-2xl md:text-3xl font-lemonBold text-white tracking-tight">
-                  {plan.price}
-                </span>
-              </div>
-
-              <p className="font-helveticaRoman text-zinc-400 text-xs md:text-sm leading-relaxed mb-6">
-                {plan.description}
-              </p>
-
-              <hr className="border-white/5 mb-6" />
-
-              <ul className="space-y-4 grow mb-8">
-                {plan.features.map((feature, fIdx) => (
-                  <li key={fIdx} className="flex items-start gap-3">
-                    <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${plan.highlighted ? "bg-cabuwebMedium/20" : "bg-white/5"
-                      }`}>
-                      <Check className={`w-2.5 h-2.5 ${plan.highlighted ? "text-cabuwebMedium" : "text-zinc-400"}`} />
-                    </div>
-                    <span className="font-helveticaRoman text-zinc-300 text-xs md:text-sm leading-relaxed">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
+              {/* Action CTA Button */}
               <button
-                onClick={() => handlePlanSelect(plan.name)}
-                className={`w-full py-4 rounded-xl font-lemonLight text-xs tracking-widest uppercase transition-all duration-300 cursor-pointer text-center hover:scale-[1.02] active:scale-[0.98] ${plan.highlighted
-                  ? "bg-cabuwebMedium text-white hover:bg-cabuwebMedium/90 shadow-[0_5px_15px_rgba(0,116,255,0.3)]"
-                  : "bg-white/5 hover:bg-white/10 text-white border border-white/10"
+                onClick={() => handleCtaClick(plan.name)}
+                className={`w-full text-center py-4 font-lemonLight text-xs tracking-widest uppercase rounded-xl transition-all duration-300 cursor-pointer ${plan.highlighted
+                  ? "bg-cabuwebMedium hover:bg-cabuwebMedium/90 text-white shadow-[0_10px_30px_rgba(0,116,255,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+                  : "bg-white/5 hover:bg-white/10 border border-white/10 text-white hover:scale-[1.02] active:scale-[0.98]"
                   }`}
               >
                 {plan.ctaText}
               </button>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

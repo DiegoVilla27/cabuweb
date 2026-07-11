@@ -1,19 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import TitleSection from "./widgets/TitleSection";
 import ProjectItem from "./widgets/ProjectItem";
-import { projectsList, Project } from "@/helpers/projectsArrays";
+import { projectsList } from "@/helpers/projectsArrays";
+import { useStore } from "@/store/useStore";
+import { translations } from "@/constants/translations";
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState<"web" | "apps">("web");
+  const lang = useStore((state) => state.lang);
 
   const filteredList = projectsList.filter((item) => item.category === activeTab);
 
   const handleTabChange = (tab: "web" | "apps") => {
     setActiveTab(tab);
   };
+
+  const t = translations[lang].projects;
 
   return (
     <section id="proyects" className="px-6 py-32 relative w-full overflow-hidden bg-zinc-900/30 border-y border-white/5">
@@ -26,17 +30,17 @@ export default function Projects() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <TitleSection
-          titleOne="Casos de"
-          titleTwo="Éxito"
-          text="Nuestro trabajo habla por sí solo. Explora el portafolio de empresas y startups que han revolucionado su industria con nuestra ingeniería."
+          titleOne={t.titleOne}
+          titleTwo={t.titleTwo}
+          text={t.subtitle}
         />
 
         {/* Navigation Tabs */}
         <div className="flex justify-center my-16 relative z-10">
           <div className="flex justify-evenly items-center w-full max-w-2xl bg-zinc-900/50 backdrop-blur-md shadow-lg border border-white/10 p-1.5 rounded-full">
             {[
-              { id: "web", label: "Páginas web" },
-              { id: "apps", label: <>Aplicaciones <span className="hidden md:inline">móviles</span></> },
+              { id: "web", label: t.tabWeb },
+              { id: "apps", label: t.tabApps },
             ].map((tab) => {
               const isActive = activeTab === tab.id;
               return (
@@ -55,22 +59,11 @@ export default function Projects() {
           </div>
         </div>
 
-        <div className="grid grid-cols-12 gap-8 lg:gap-12 relative z-10 mt-8">
-          <AnimatePresence mode="popLayout">
-            {filteredList.map((item, i) => (
-              <motion.div
-                layout
-                key={item.id + "-" + activeTab}
-                initial={{ opacity: 0, scale: 0.9, y: 50 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 50 }}
-                transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                className="col-span-12 md:col-span-6 xl:col-span-4 flex justify-center"
-              >
-                <ProjectItem item={item} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+        {/* Dynamic Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 relative z-10">
+          {filteredList.map((project) => (
+            <ProjectItem key={project.id} item={project} />
+          ))}
         </div>
       </div>
     </section>

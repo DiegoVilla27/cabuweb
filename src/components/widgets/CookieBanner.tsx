@@ -4,9 +4,13 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Cookie } from "lucide-react";
+import { useStore } from "@/store/useStore";
+import { translations } from "@/constants/translations";
 
 export default function CookieBanner() {
   const [show, setShow] = useState(false);
+  const lang = useStore((state) => state.lang);
+  const t = translations[lang].cookies;
 
   useEffect(() => {
     const consent = localStorage.getItem("cookieConsent");
@@ -27,6 +31,10 @@ export default function CookieBanner() {
     setShow(false);
   };
 
+  const txtTitle = lang === "es" ? "Control de Privacidad" : "Privacy Control";
+  const txtMoreInfo = lang === "es" ? "Más detalles en nuestra " : "More details in our ";
+  const txtPolicyLink = lang === "es" ? "Política de Privacidad" : "Privacy Policy";
+
   return (
     <AnimatePresence>
       {show && (
@@ -46,26 +54,26 @@ export default function CookieBanner() {
                 <Cookie className="w-5 h-5 text-cabuwebMedium" />
               </div>
               <div>
-                <h3 className="font-lemonBold text-zinc-100 text-sm mb-2 tracking-wide uppercase">Control de Privacidad</h3>
+                <h3 className="font-lemonBold text-zinc-100 text-sm mb-2 tracking-wide uppercase">{txtTitle}</h3>
                 <p className="font-helveticaRoman text-xs text-zinc-400 leading-relaxed mb-5">
-                  Utilizamos cookies estrictamente necesarias para el correcto funcionamiento del sitio web, y cookies analíticas opcionales para mejorar tu experiencia como usuario.
-                  Más detalles en nuestra{" "}
+                  {t.message}
+                  {" "}{txtMoreInfo}
                   <Link href="/politica-de-privacidad" className="text-cabuwebMedium hover:text-white transition-colors">
-                    Política de Privacidad
+                    {txtPolicyLink}
                   </Link>.
                 </p>
                 <div className="flex gap-3">
                   <button
                     onClick={handleAccept}
-                    className="flex-1 bg-white text-zinc-950 hover:bg-zinc-200 font-helveticaBold uppercase text-[10px] tracking-wider py-3 rounded-lg transition-all shadow-[0_0_10px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                    className="flex-1 bg-white text-zinc-950 hover:bg-zinc-200 font-helveticaBold uppercase text-[10px] tracking-wider py-3 rounded-lg transition-all shadow-[0_0_10px_rgba(255,255,255,0.1)] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] cursor-pointer"
                   >
-                    Aceptar todas
+                    {t.accept}
                   </button>
                   <button
                     onClick={handleReject}
-                    className="flex-1 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white border border-white/10 font-helveticaBold uppercase text-[10px] tracking-wider py-3 rounded-lg transition-colors"
+                    className="flex-1 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white border border-white/10 font-helveticaBold uppercase text-[10px] tracking-wider py-3 rounded-lg transition-colors cursor-pointer"
                   >
-                    Solo esenciales
+                    {t.decline}
                   </button>
                 </div>
               </div>

@@ -9,6 +9,7 @@ import Team from "@/components/Team";
 import Faq from "@/components/Faq";
 import Footer from "@/shared/Footer";
 import ServiceModal from "@/components/widgets/ServiceModal";
+import CookieBanner from "@/components/widgets/CookieBanner";
 
 export default function Home() {
   const jsonLd = {
@@ -39,6 +40,7 @@ export default function Home() {
       <Sidenav />
       <Whatsapp />
       <ServiceModal />
+      <CookieBanner />
     </>
   );
 }

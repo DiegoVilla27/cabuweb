@@ -255,3 +255,246 @@ export const projectDetailsMap: Record<string, ProjectDetail> = {
     businessGoal: "Elevar la experiencia de reserva online y potenciar la venta de creaciones culinarias de alta gama."
   }
 };
+
+export const projectDetailsMapEn: Record<string, ProjectDetail> = {
+  "joyeria-amaia": {
+    slug: "joyeria-amaia",
+    tagline: "Enduring Elegance",
+    marketingPitch: "A sophisticated e-commerce boutique designed to reflect luxury, exclusivity, and trust. With a clean and fluid user interface, this website maximizes product perceived value and drives conversions with intuitive navigation and integrated payment gateways.",
+    features: [
+      "High-resolution interactive digital catalog",
+      "Advanced filtering by collection and precious metals",
+      "100% secure integrated payment gateway",
+      "Responsive design optimized for mobile shopping",
+      "Simple admin dashboard for stock management"
+    ],
+    specs: {
+      performance: "98%",
+      seo: "100%",
+      loadingTime: "0.8s",
+      mobileScore: "95%"
+    },
+    technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "Supabase"],
+    businessGoal: "Increase average ticket value and project exclusivity of fine jewelry items via a premium user journey."
+  },
+  "burger-store": {
+    slug: "burger-store",
+    tagline: "The Flavor of Success on Screen",
+    marketingPitch: "A fast-food and delivery web platform designed to trigger appetite. With an interactive ordering system and highly visual menus, this website accelerates local sales and instantly builds customer loyalty.",
+    features: [
+      "Self-manageable digital menu with dynamic food photography",
+      "Real-time shopping cart without page refreshes",
+      "Direct integration to receive orders via WhatsApp",
+      "Limited-time promotions and combos section",
+      "Optimized geolocation for delivery address routing"
+    ],
+    specs: {
+      performance: "95%",
+      seo: "98%",
+      loadingTime: "1.1s",
+      mobileScore: "93%"
+    },
+    technologies: ["React", "Tailwind CSS", "Framer Motion", "Zustand"],
+    businessGoal: "Automate online orders for local restaurants, reducing reliance on expensive third-party delivery platforms."
+  },
+  "aurum-cafe": {
+    slug: "aurum-cafe",
+    tagline: "Awaken Your Senses",
+    marketingPitch: "An immersive digital experience for specialty coffee shops and local roasters. Conveys the passion, origin, and quality of every single bean with minimalist layout design, editorial typography, and subtle micro-animations.",
+    features: [
+      "High-end minimalist editorial layout",
+      "Interactive coffee bean origin and roasting stories",
+      "Integrated monthly coffee subscription module",
+      "Interactive beverage menu updated live",
+      "Booking portal for private catas and masterclasses"
+    ],
+    specs: {
+      performance: "99%",
+      seo: "100%",
+      loadingTime: "0.7s",
+      mobileScore: "98%"
+    },
+    technologies: ["Next.js 15", "Tailwind CSS 4", "Framer Motion"],
+    businessGoal: "Build a community around specialty coffee and sell subscriptions directly to consumers."
+  },
+  "gym-store-elite": {
+    slug: "gym-store-elite",
+    tagline: "Redefine Your Limit",
+    marketingPitch: "A bold and high-energy website for fitness centers and premium athletic clothing brands. Its high-contrast modern design conveys strength, discipline, and achievement, perfect for capturing leads and selling memberships or gear.",
+    features: [
+      "Interactive membership price calculator",
+      "Integrated supplement and activewear e-store",
+      "Interactive group class schedule and booking",
+      "Transformational student progress cases",
+      "High-impact dark cyberpunk aesthetics"
+    ],
+    specs: {
+      performance: "97%",
+      seo: "96%",
+      loadingTime: "0.9s",
+      mobileScore: "94%"
+    },
+    technologies: ["Next.js", "Tailwind CSS", "Lucide Icons", "Framer Motion"],
+    businessGoal: "Capture new membership leads and automate repetitive student scheduling."
+  },
+  "herbs-botanica": {
+    slug: "herbs-botanica",
+    tagline: "Botanical Architecture",
+    marketingPitch: "A sophisticated nature-inspired website, perfect for luxury florists, landscape designers, and exclusive plant nurseries. Combines organic earthy tones, custom typography, and elegant transitions to provide a peaceful user experience.",
+    features: [
+      "Interactive plant care and gardening guides",
+      "Editorial interior design and landscaping gallery",
+      "Simplified checkout process (Fast Checkout)",
+      "Smart plant selector quiz based on room parameters",
+      "Integrated botanical blog for technical content SEO optimization"
+    ],
+    specs: {
+      performance: "98%",
+      seo: "100%",
+      loadingTime: "0.8s",
+      mobileScore: "96%"
+    },
+    technologies: ["React", "Tailwind CSS", "Framer Motion", "Next.js"],
+    businessGoal: "Attract design-oriented urban demographics looking for luxury indoor plants and decor services."
+  },
+  "healthcare-medicina": {
+    slug: "healthcare-medicina",
+    tagline: "State-of-the-Art Medicine",
+    marketingPitch: "A clean, highly professional, and informative web platform for clinics and medical specialists. Conveys trust, cleanliness, and safety. Optimizes patient intake by allowing direct booking and detailing treatments clearly.",
+    features: [
+      "Online appointment booking and scheduling system",
+      "Interactive directory of resident medical specialists",
+      "Comprehensive medical treatment and procedure detail files",
+      "Frequently Asked Questions with rapid accordion toggles",
+      "Fully accessible design meeting health information regulations"
+    ],
+    specs: {
+      performance: "96%",
+      seo: "100%",
+      loadingTime: "1.0s",
+      mobileScore: "94%"
+    },
+    technologies: ["Next.js", "Tailwind CSS", "Lucide Icons"],
+    businessGoal: "Reduce customer support call volumes by enabling online consultation scheduling and patient resources download."
+  },
+  "lawyers-partners": {
+    slug: "lawyers-partners",
+    tagline: "Corporate Defense & Strategy",
+    marketingPitch: "A premium corporate platform for law firms and financial advisories. Its sober and distinguished design reinforces prestige, ethics, and technical reliability, attracting high-profile clients and corporate partnerships.",
+    features: [
+      "Detailed legal practice areas structure navigation",
+      "Interactive profiles and bios of senior managing partners",
+      "Virtual and physical consultation scheduler",
+      "Corporate law and financial jurisprudence updates blog",
+      "Secure and confidential case inquiry intake form"
+    ],
+    specs: {
+      performance: "97%",
+      seo: "100%",
+      loadingTime: "0.8s",
+      mobileScore: "95%"
+    },
+    technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
+    businessGoal: "Project thought leadership in the legal space and initiate the intake funnel for high-volume corporate clients."
+  },
+  "clinica-veterinaria": {
+    slug: "clinica-veterinaria",
+    tagline: "Compassionate Veterinary Care",
+    marketingPitch: "A warm, welcoming, and interactive website for vet clinics and animal hospitals. Blends detailed services breakdowns with a friendly design that reassures pet owners and facilitates direct contact.",
+    features: [
+      "Automated pet vaccination tracking and appointment reminders",
+      "Specialized surgical, emergency, and lab diagnostic service files",
+      "Educational pet care and nutrition guidelines blog",
+      "24/7 medical emergency alert header with tap-to-call link",
+      "Full digital tour gallery of advanced clinic facilities"
+    ],
+    specs: {
+      performance: "95%",
+      seo: "98%",
+      loadingTime: "1.2s",
+      mobileScore: "92%"
+    },
+    technologies: ["React", "Tailwind CSS", "Framer Motion"],
+    businessGoal: "Build trust with local families and consolidate local market leadership as the premier pet clinic."
+  },
+  "vortex-streetwear": {
+    slug: "vortex-streetwear",
+    tagline: "Comfort Reinvented",
+    marketingPitch: "An urban, hyper-modern online footwear store centered on streetwear culture. With bold typography, rebel styling, and futuristic scrolling animations, this web store is built to capture Gen-Z fashion enthusiasts.",
+    features: [
+      "Advanced sneaker catalog search and color filters",
+      "Limited-edition shoe 'Drops' with real-time countdowns",
+      "Lookbook-style urban fashion catalog structure",
+      "Integrated credit card and dynamic checkout options",
+      "Exclusive VIP loyalty program rewards dashboard"
+    ],
+    specs: {
+      performance: "98%",
+      seo: "99%",
+      loadingTime: "0.9s",
+      mobileScore: "96%"
+    },
+    technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
+    businessGoal: "Convert web traffic into streetwear retail purchases with an immersive mobile first shopping catalog."
+  },
+  "derby-zapateria": {
+    slug: "derby-zapateria",
+    tagline: "Definitive Elegance",
+    marketingPitch: "A luxury store web space showcasing classic handcrafted shoes. Its leather color palettes, serif typography, and rich media galleries convey Goodyear-welted heritage and strict artisanal craftsmanship details.",
+    features: [
+      "Private physical showroom consulting scheduler",
+      "Goodyear Welted manufacturing process guides",
+      "Full-screen high-res leather and stitching detail galleries",
+      "Individual model heritage story logs",
+      "Interactive shoe size recommender for remote shoppers"
+    ],
+    specs: {
+      performance: "99%",
+      seo: "100%",
+      loadingTime: "0.7s",
+      mobileScore: "97%"
+    },
+    technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
+    businessGoal: "Position the brand firmly in the custom luxury shoemaking niche, justifying custom pricing models."
+  },
+  "boutique-alta-costura": {
+    slug: "boutique-alta-costura",
+    tagline: "Elegance Defined",
+    marketingPitch: "A minimalist fashion showcase celebrating 'quiet luxury'. Clean grids, fashion editorial layouts, and ample negative space allow premium textile details and craftsmanship to take center stage.",
+    features: [
+      "Fashion editorials and virtual seasonal fashion shows",
+      "Textile provenance and care details sheets (cashmere, silk)",
+      "Private tailoring fitting showroom booking widget",
+      "Seamless instant messaging and chat channels integration",
+      "Ultra-crisp design optimized for Retina display monitors"
+    ],
+    specs: {
+      performance: "98%",
+      seo: "100%",
+      loadingTime: "0.8s",
+      mobileScore: "96%"
+    },
+    technologies: ["Next.js", "Tailwind CSS", "Lucide Icons"],
+    businessGoal: "Display seasonal designer releases as fine art, attracting elite haute couture clientele."
+  },
+  "antica-forno-pizza": {
+    slug: "antica-forno-pizza",
+    tagline: "The Art of Flame and Flour",
+    marketingPitch: "A captivating dining web platform for gourmet pizzerias and high-end Italian eateries. Combines dark textures and warm volcanic tones to mimic wood-fired ovens, prompting online reservations.",
+    features: [
+      "Interactive menu detailing DOP ingredients and allergen safety",
+      "Automated reservation system integrated with local restaurant POS",
+      "Sourdough slow-fermentation process storytelling sheets",
+      "Live integrated TripAdvisor review sliders",
+      "Google Maps local directions and live operating hours"
+    ],
+    specs: {
+      performance: "97%",
+      seo: "100%",
+      loadingTime: "0.9s",
+      mobileScore: "94%"
+    },
+    technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
+    businessGoal: "Elevate the online reservation experience and boost organic gourmet creation orders."
+  }
+};

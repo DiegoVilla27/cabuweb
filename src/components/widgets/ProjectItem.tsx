@@ -3,12 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Project } from "@/helpers/projectsArrays";
+import { useStore } from "@/store/useStore";
 
 interface ProjectItemProps {
   item: Project;
 }
 
 export default function ProjectItem({ item }: ProjectItemProps) {
+  const lang = useStore((state) => state.lang);
+
   const handleQuoteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -17,13 +20,18 @@ export default function ProjectItem({ item }: ProjectItemProps) {
     const textarea = document.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
     if (textarea) {
       // Professional pre-filled message
-      textarea.value = `Hola, equipo de Cabuweb. Estoy interesado/a en cotizar un proyecto con un nivel de calidad y diseño similar a ${item.name}. Me gustaría recibir más información.`;
+      textarea.value = lang === "es"
+        ? `Hola, equipo de Cabuweb. Estoy interesado/a en cotizar un proyecto con un nivel de calidad y diseño similar a ${item.name}. Me gustaría recibir más información.`
+        : `Hello, Cabuweb team. I am interested in quoting a project with a quality and design standard similar to ${item.name}. I would like to receive more info.`;
       // Dispatch input event for react-hook-form to register the change
       textarea.dispatchEvent(new Event("input", { bubbles: true }));
       // Smooth scroll to the form
       document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const txtView = lang === "es" ? "Ver Proyecto" : "View Project";
+  const txtQuote = lang === "es" ? "Cotizar" : "Quote";
 
   return (
     <div className="group transition-all duration-500 cursor-pointer z-10 text-center w-full max-w-[400px] mx-auto perspective-1000">
@@ -73,13 +81,13 @@ export default function ProjectItem({ item }: ProjectItemProps) {
 
           <div className="absolute inset-0 flex flex-col gap-3 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-30">
             <span className="bg-cabuwebMedium text-white font-lemonLight text-xs md:text-sm uppercase tracking-widest px-6 py-3 rounded-full shadow-[0_10px_30px_rgba(0,116,255,0.4)] translate-y-4 group-hover:translate-y-0 transition-transform duration-700 pointer-events-auto">
-              Ver Proyecto
+              {txtView}
             </span>
             <button
               onClick={handleQuoteClick}
               className="bg-white text-zinc-900 font-lemonLight text-xs md:text-sm uppercase tracking-widest px-6 py-3 rounded-full shadow-[0_10px_30px_rgba(255,255,255,0.2)] translate-y-8 group-hover:translate-y-0 transition-transform duration-700 delay-50 pointer-events-auto hover:scale-105"
             >
-              Cotizar
+              {txtQuote}
             </button>
           </div>
         </div>

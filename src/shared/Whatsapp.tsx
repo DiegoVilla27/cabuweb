@@ -1,11 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useStore } from "@/store/useStore";
+import { translations } from "@/constants/translations";
+
+const WHATSAPP_NUMBER = "34658074821";
 
 export default function Whatsapp() {
+  const lang = useStore((state) => state.lang);
+  const message = translations[lang].whatsapp.message;
+  const href = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`;
+
   return (
     <motion.a
-      href="https://api.whatsapp.com/send?phone=34658074821&text=%C2%A1Hola%20equipo%20de%20Cabuweb!%20%F0%9F%91%8B%20Estoy%20interesado%20en%20cotizar%20un%20proyecto%20tecnol%C3%B3gico%20con%20ustedes.%20%F0%9F%9A%80"
+      href={href}
       rel="noreferrer"
       target="_blank"
       initial={{ opacity: 0, scale: 0.5 }}

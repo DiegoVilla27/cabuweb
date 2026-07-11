@@ -3,37 +3,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, HelpCircle } from "lucide-react";
-
-interface FaqItem {
-  question: string;
-  answer: string;
-}
-
-const faqList: FaqItem[] = [
-  {
-    question: "¿Cuál es el tiempo de entrega promedio de un proyecto?",
-    answer: "Depende de la complejidad. Una página web corporativa/landing suele tomar entre 2 y 4 semanas. Un desarrollo a la medida (ERP, CRM) o aplicación móvil puede tomar de 8 a 16 semanas. Siempre establecemos un cronograma detallado con fases e hitos de entrega claros."
-  },
-  {
-    question: "¿El diseño de las aplicaciones y páginas web es único?",
-    answer: "Sí, en Cabuweb no trabajamos con plantillas prediseñadas o genéricas. Todo el diseño de interfaz de usuario (UI/UX) es creado desde cero por nuestros diseñadores, adaptándose 100% a la identidad de tu marca."
-  },
-  {
-    question: "¿Cómo manejan el soporte técnico post-lanzamiento?",
-    answer: "Ofrecemos una garantía técnica de 6 meses post-lanzamiento contra cualquier tipo de fallo de programación. Además, disponemos de planes de mantenimiento mensual que incluyen copias de seguridad, actualizaciones de seguridad y optimizaciones constantes."
-  },
-  {
-    question: "¿El código fuente y la base de datos me pertenecen?",
-    answer: "Por supuesto. Al finalizar el proyecto y completar los hitos de pago, todos los derechos de propiedad intelectual, código fuente y acceso a bases de datos e infraestructura se transfieren en su totalidad al cliente."
-  },
-  {
-    question: "¿Qué tecnologías utilizan para el desarrollo?",
-    answer: "Nos especializamos en tecnologías modernas y de alto rendimiento. Para sitios web y SaaS utilizamos Next.js, React y Tailwind CSS. Para aplicaciones móviles desarrollamos tanto en React Native como nativo (Swift/Kotlin). Para bases de datos y backend nos apoyamos en Supabase, Node.js y PostgreSQL."
-  }
-];
+import { useStore } from "@/store/useStore";
+import { translations } from "@/constants/translations";
 
 export default function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const lang = useStore((state) => state.lang);
+  const t = translations[lang].faq;
 
   const toggleFaq = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx);
@@ -43,7 +19,7 @@ export default function Faq() {
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": faqList.map((item) => ({
+    "mainEntity": t.items.map((item) => ({
       "@type": "Question",
       "name": item.question,
       "acceptedAnswer": {
@@ -67,18 +43,18 @@ export default function Faq() {
       <div className="max-w-4xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <span className="font-lemonLight text-cabuwebMedium text-xs md:text-sm uppercase tracking-widest block mb-3">
-            Preguntas Frecuentes
+            {t.titleOne} {t.titleTwo}
           </span>
           <h2 className="font-lemonLight text-3xl md:text-5xl text-white uppercase tracking-tight leading-none mb-4">
-            Resolver tus <span className="font-lemonBold">Dudas</span>
+            {t.resolveTitle} <span className="font-lemonBold">{t.resolveBold}</span>
           </h2>
           <p className="font-helveticaRoman text-zinc-400 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
-            Todo lo que necesitas saber sobre nuestra metodología de trabajo de élite, desarrollo tecnológico y soporte.
+            {t.subtitle}
           </p>
         </div>
 
         <div className="space-y-4">
-          {faqList.map((item, idx) => {
+          {t.items.map((item, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div

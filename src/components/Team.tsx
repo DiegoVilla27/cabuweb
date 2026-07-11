@@ -3,8 +3,13 @@
 import TitleSection from "./widgets/TitleSection";
 import TeamItem from "./widgets/TeamItem";
 import { TEAM_MEMBERS } from "@/constants/data";
+import { useStore } from "@/store/useStore";
+import { translations } from "@/constants/translations";
 
 export default function Team() {
+  const lang = useStore((state) => state.lang);
+  const t = translations[lang].team;
+
   return (
     <section id="team" className="px-6 py-32 relative w-full overflow-hidden bg-zinc-900/30 border-t border-b border-white/5">
       {/* Subtle Background Pattern */}
@@ -15,9 +20,9 @@ export default function Team() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <TitleSection
-          titleOne="Talento"
-          titleTwo="de Élite"
-          text="No somos una agencia tradicional. Somos un escuadrón de ingenieros y diseñadores altamente especializados, construyendo el software del mañana."
+          titleOne={t.titleOne}
+          titleTwo={t.titleTwo}
+          text={t.subtitle}
         />
         <div className="flex flex-wrap justify-center gap-6 md:gap-10 lg:gap-16 mt-20 max-w-5xl mx-auto">
           {TEAM_MEMBERS.map((item) => (
