@@ -1,4 +1,4 @@
-# 🚀 Cabuweb — Ecosystem Frontend de Alta Costura Tecnológica
+# 🚀 Cabuweb — Ecosystem Frontend de Alta Costura Tecnológica 
 
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.2.9-blue.svg?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19.2.4-blue.svg?style=flat-square&logo=react&logoColor=white)](https://react.dev/)
