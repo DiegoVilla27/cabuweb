@@ -4,7 +4,8 @@ import { projectsList } from "@/helpers/projectsArrays";
 import { projectDetailsMap } from "@/helpers/projectDetailsData";
 import ProjectDetailContent from "@/components/ProjectDetailContent";
 
-const BASE_URL = "https://www.cabuweb.com";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.cabuweb.com";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -26,7 +27,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!project || !detail) return {};
 
   const pageTitle = `${project.name} — ${detail.tagline}`;
-  const pageDesc = `${detail.marketingPitch} Desarrollado por Cabuweb: Software, Diseño y Tecnología de alta gama.`;
+
+  // Truncate to 155 chars — prevents Google from overriding with its own snippet
+  const rawDesc = `${detail.marketingPitch} Desarrollado por Cabuweb.`;
+  const pageDesc =
+    rawDesc.length > 155 ? rawDesc.slice(0, 152) + "..." : rawDesc;
+
   const absoluteImg = `${BASE_URL}${project.img}`;
   const canonicalUrl = `${BASE_URL}/proyectos/${slug}`;
 
@@ -34,10 +40,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     project.name,
     detail.tagline,
     ...detail.technologies,
+    "cabuweb",
     "caso de éxito",
-    "proyecto web",
-    "diseño web premium",
-    "desarrollo web cabuweb",
+    "desarrollo web premium",
     "agencia de software",
   ];
 
@@ -100,5 +105,39 @@ export default async function ProjectPage({ params }: Props) {
     notFound();
   }
 
-  return <ProjectDetailContent project={project} slug={slug} />;
+  // BreadcrumbList JSON-LD — server-rendered, no JS needed by Googlebot
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Inicio",
+        item: BASE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Proyectos",
+        item: `${BASE_URL}/#proyects`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project!.name,
+        item: `${BASE_URL}/proyectos/${slug}`,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+      <ProjectDetailContent project={project!} slug={slug} />
+    </>
+  );
 }

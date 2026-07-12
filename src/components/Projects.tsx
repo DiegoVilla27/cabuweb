@@ -60,7 +60,7 @@ export default function Projects() {
         </div>
 
         {/* Dynamic Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 relative z-10">
           {filteredList.map((project) => (
             <ProjectItem key={project.id} item={project} />
           ))}

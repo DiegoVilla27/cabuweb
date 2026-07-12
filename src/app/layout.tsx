@@ -1,19 +1,23 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Toaster } from "sonner";
 import "./globals.css";
-import CookieBanner from "@/components/widgets/CookieBanner";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.cabuweb.com";
 
 export const viewport: Viewport = {
   themeColor: "#000000",
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.cabuweb.com"),
+  metadataBase: new URL(BASE_URL),
   title: {
-    default: "Cabuweb — Agencia de Software Premium | Web, Apps y Software a Medida",
+    default:
+      "Cabuweb — Agencia de Software Premium | Web, Apps y Software a Medida",
     template: "%s | Cabuweb",
   },
   description:
@@ -50,7 +54,7 @@ export const metadata: Metadata = {
     "empresa de software",
     "transformación digital empresas",
   ],
-  authors: [{ name: "Cabuweb", url: "https://www.cabuweb.com" }],
+  authors: [{ name: "Cabuweb", url: BASE_URL }],
   creator: "Cabuweb",
   publisher: "Cabuweb",
   robots: {
@@ -65,22 +69,23 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   alternates: {
-    canonical: "https://www.cabuweb.com",
+    canonical: BASE_URL,
     languages: {
-      "es": "https://www.cabuweb.com",
-      "en": "https://www.cabuweb.com",
-      "x-default": "https://www.cabuweb.com",
+      es: BASE_URL,
+      en: BASE_URL,
+      "x-default": BASE_URL,
     },
   },
   openGraph: {
-    url: "https://www.cabuweb.com",
+    url: BASE_URL,
     type: "website",
-    title: "Cabuweb — Agencia de Software Premium | Web, Apps y Software a Medida",
+    title:
+      "Cabuweb — Agencia de Software Premium | Web, Apps y Software a Medida",
     description:
       "Construimos ecosistemas tecnológicos de alto rendimiento. Páginas web, aplicaciones móviles y software a medida para escalar tu negocio. ¡Cotiza ahora!",
     images: [
       {
-        url: "https://www.cabuweb.com/img/seo/cabuweb_op.jpg",
+        url: `${BASE_URL}/img/seo/cabuweb_op.jpg`,
         width: 1200,
         height: 630,
         alt: "Cabuweb — Agencia de Software Premium",
@@ -98,17 +103,22 @@ export const metadata: Metadata = {
     title: "Cabuweb — Agencia de Software Premium",
     description:
       "Construimos ecosistemas tecnológicos de alto rendimiento. Páginas web, aplicaciones móviles y software a medida para escalar tu negocio.",
-    images: [{
-      url: "https://www.cabuweb.com/img/seo/cabuweb_op.jpg",
-      alt: "Cabuweb — Agencia de Software Premium",
-    }],
+    images: [
+      {
+        url: `${BASE_URL}/img/seo/cabuweb_op.jpg`,
+        alt: "Cabuweb — Agencia de Software Premium",
+      },
+    ],
   },
   icons: {
     icon: [
       { url: "/favicons/favicon-16x16.png", sizes: "16x16" },
       { url: "/favicons/favicon-32x32.png", sizes: "32x32" },
       { url: "/favicons/favicon-96x96.png", sizes: "96x96" },
-      { url: "/favicons/android/android-icon-192x192.png", sizes: "192x192" },
+      {
+        url: "/favicons/android/android-icon-192x192.png",
+        sizes: "192x192",
+      },
     ],
     apple: [
       { url: "/favicons/apple/apple-icon-57x57.png", sizes: "57x57" },
@@ -138,9 +148,9 @@ export default function RootLayout({
     name: "Cabuweb",
     description:
       "Agencia de desarrollo de software premium especializada en páginas web de alto rendimiento, aplicaciones móviles nativas e híbridas y software a la medida para empresas y startups.",
-    url: "https://www.cabuweb.com",
-    logo: "https://www.cabuweb.com/img/seo/cabuweb_op.jpg",
-    image: "https://www.cabuweb.com/img/seo/cabuweb_op.jpg",
+    url: BASE_URL,
+    logo: `${BASE_URL}/img/seo/cabuweb_op.jpg`,
+    image: `${BASE_URL}/img/seo/cabuweb_op.jpg`,
     email: "cabuweb.info@gmail.com",
     telephone: "(+34) 658074821",
     address: {
@@ -177,7 +187,8 @@ export default function RootLayout({
           itemOffered: {
             "@type": "Service",
             name: "Landing Page Premium",
-            description: "Página web de aterrizaje personalizada con diseño UI/UX exclusivo, carga ultra rápida y SEO nativo.",
+            description:
+              "Página web de aterrizaje personalizada con diseño UI/UX exclusivo, carga ultra rápida y SEO nativo.",
           },
           priceCurrency: "USD",
           price: "399",
@@ -187,7 +198,8 @@ export default function RootLayout({
           itemOffered: {
             "@type": "Service",
             name: "Tienda Virtual (E-commerce)",
-            description: "Tienda online con catálogo autogestionable, pasarela de pagos integrada y panel de pedidos.",
+            description:
+              "Tienda online con catálogo autogestionable, pasarela de pagos integrada y panel de pedidos.",
           },
           priceCurrency: "USD",
           price: "899",
@@ -197,7 +209,8 @@ export default function RootLayout({
           itemOffered: {
             "@type": "Service",
             name: "E-commerce Custom",
-            description: "Plataforma de comercio electrónico de alto volumen con automatizaciones, multi-idioma y soporte 24/7.",
+            description:
+              "Plataforma de comercio electrónico de alto volumen con automatizaciones, multi-idioma y soporte 24/7.",
           },
           priceCurrency: "USD",
           price: "1699",
@@ -215,7 +228,15 @@ export default function RootLayout({
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
         opens: "08:30",
         closes: "18:30",
       },
@@ -226,8 +247,37 @@ export default function RootLayout({
   return (
     <html lang="es" className="h-full antialiased scroll-smooth">
       <head>
-        {/* Meta Pixel Code */}
+        {/* Critical font preloads — eliminates FOUT on LCP elements */}
+        <link
+          rel="preload"
+          href="/fonts/lemon/LemonMilkBold.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/helvetica/HelveticaRoman.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
+        {/* JSON-LD in <head> for faster Googlebot structured data discovery */}
         <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Toaster position="bottom-right" richColors />
+        <Analytics />
+        <SpeedInsights />
+
+        {/* Facebook Pixel — afterInteractive: non-blocking, fires after hydration */}
+        <Script
+          id="fb-pixel"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)
@@ -243,28 +293,10 @@ export default function RootLayout({
             `,
           }}
         />
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=1047018098005087&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
-      </head>
-      <body className="min-h-full flex flex-col">
-        {children}
-        <Toaster position="bottom-right" richColors />
-        <CookieBanner />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <Analytics />
-        <SpeedInsights />
+
+        {/* Google Analytics — inside body, before </body> */}
+        <GoogleAnalytics gaId="G-8V04X7W300" />
       </body>
-      <GoogleAnalytics gaId="G-8V04X7W300" />
     </html>
   );
 }

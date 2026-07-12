@@ -104,7 +104,6 @@ body {
   color: var(--foreground);
   font-family: var(--font-helveticaRoman);
   overflow-x: hidden;
-  scroll-behavior: smooth;
 }
 
 /* Scroll smooth for the entire page */

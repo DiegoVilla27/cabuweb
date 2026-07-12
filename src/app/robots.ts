@@ -1,17 +1,19 @@
 import { MetadataRoute } from "next";
 
-const BASE_URL = "https://www.cabuweb.com";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.cabuweb.com";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
+        // Standard crawlers: allow everything except thank-you page
         userAgent: "*",
         allow: "/",
-        disallow: ["/gracias", "/actions/"],
+        disallow: ["/gracias", "/gracias/"],
       },
       {
-        // Block common AI scrapers that don't respect content licensing
+        // Block AI training scrapers — protect content licensing
         userAgent: [
           "GPTBot",
           "ChatGPT-User",
